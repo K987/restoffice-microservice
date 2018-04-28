@@ -1,0 +1,18 @@
+zuul:
+  add-proxy-headers: true
+  ignored-services: '*'
+  prefix: /api
+  routes:
+    restoffice-transaction-service:
+      path: /transaction/**
+      service-id: restoffice-transaction-service
+      strip-prefix: true
+#    restoffice-config-server:
+#      path: /config/**
+#      service-id: restoffice-config-server
+#      strip-prefix: true
+    restoffice-authorization-server:
+      path: /auth/**
+      service-id: restoffice-authorization-server
+      strip-prefix: true
+      sensitiveHeaders:

@@ -1,0 +1,21 @@
+spring:
+  rabbitmq:
+    host: hound.rmq.cloudamqp.com
+    port: 5672
+    virtual-host: kvnxlsmi
+    username: kvnxlsmi
+    password: r1TfFMXjTji1aF5fvcocImuP05rhA17j
+  cloud:
+    bus:
+      enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    healthcheck:
+      enabled: true

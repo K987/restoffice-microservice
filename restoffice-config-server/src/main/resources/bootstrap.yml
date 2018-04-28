@@ -1,0 +1,15 @@
+server:
+  port: 0
+spring:
+  application:
+    name: restoffice-config-server
+  profiles:
+    active:
+    - development
+  cloud:
+    config:
+      server:
+        git:
+          uri: /Volumes/MacHDD1/eclipse-workspace/restoffice-microservice/config-git-repository
+        bootstrap: true
+        
