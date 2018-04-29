@@ -1,0 +1,8 @@
+message: Hello Default!
+spring:
+  rabbitmq:
+    host: hound.rmq.cloudamqp.com
+    port: 5672
+    virtual-host: kvnxlsmi
+    username: kvnxlsmi
+    password: r1TfFMXjTji1aF5fvcocImuP05rhA17j
