@@ -11,7 +11,7 @@ spring:
       discovery:
         enabled: true
         service-id: restoffice-config-server
-      fail-fast: true
+      fail-fast: false
 eureka:
   client:
 #    serviceUrl:
