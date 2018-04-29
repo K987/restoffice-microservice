@@ -6,3 +6,7 @@ spring:
     virtual-host: kvnxlsmi
     username: kvnxlsmi
     password: r1TfFMXjTji1aF5fvcocImuP05rhA17j
+aspect:
+  logging:
+    component:
+      enabled: true
