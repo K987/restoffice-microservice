@@ -10,6 +10,10 @@ spring:
     config:
       server:
         git:
-          uri: /Volumes/MacHDD1/eclipse-workspace/restoffice-microservice/config-git-repository
+          force-pull: true
+          delete-untracked-branches: true
+          uri: https://github.com/K987/restoffice-microservie
+          search-paths:
+          - config-git-repository
         bootstrap: true
         
