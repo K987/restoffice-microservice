@@ -33,14 +33,27 @@ configurations {
     compile.exclude module: 'spring-boot-starter-logging'
 }
 dependencies {
+	//boot.web
 	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.boot:spring-boot-starter-log4j2')
 	compile('org.springframework.boot:spring-boot-starter-actuator')
+//    compile('org.springframework.boot:spring-boot-starter-hateoas')
+    //boot.log4h2 custom 
+	compile('org.springframework.boot:spring-boot-starter-log4j2')
+
+    //cloud.config
 	compile('org.springframework.cloud:spring-cloud-starter-config')
+	//cloud.bus
 	compile('org.springframework.cloud:spring-cloud-starter-bus-amqp')
+	//cloud.eureka
 	compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+    //cloud.security
 	compile('org.springframework.cloud:spring-cloud-starter-oauth2')
     compile('org.springframework.cloud:spring-cloud-starter-security')
+    //cloud.data
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+//    compile('org.springframework.boot:spring-boot-starter-data-rest')
+
+    runtime('com.h2database:h2')
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
