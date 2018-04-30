@@ -1,7 +1,5 @@
 package hu.restoffice.transaction.controller;
 
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,8 +17,8 @@ public class TransactionRestController {
     TransactionService transactionService;
 
     @RequestMapping("/message")
-    public String message(final Principal principal) {
-        return transactionService.getMessage(null, "az") + " user name: " + principal.getName();
+    public String message() {
+        return transactionService.getMessage(null, "az");
     }
 
     @RequestMapping(path = "/message", method = RequestMethod.POST)
