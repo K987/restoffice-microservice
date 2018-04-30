@@ -1,12 +1,16 @@
-server:
-  port: 0
 spring:
   application:
     name: restoffice-transaction-service
   profiles:
     active:
     - development
+aspect:
+  logging:
+    component:
+      enabled: true
 ---
+server:
+  port: 8080
 spring:
   profiles: development
   cloud:
@@ -17,15 +21,9 @@ spring:
 eureka:
   client:
     enabled: false
-server:
-  port: 8080
-aspect:
-  logging:
-    component:
-      enabled: true
-security:
-  ignored: /**
 ---
+server:
+  port: 0
 spring:
   profiles: test
   cloud:
@@ -36,8 +34,4 @@ spring:
       fail-fast: true
 eureka:
   client:
-#    serviceUrl:
-#      defaultZone: http://localhost:8761/eureka/
     fetch-registry: true
-#    register-with-eureka: true
-#    enabled: true       
