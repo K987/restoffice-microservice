@@ -40,6 +40,16 @@ public class ServiceException extends Exception {
         this.type = type;
         this.message = message;
     }
+
+    /**
+     * @param type
+     * @param errorObject
+     */
+    public ServiceException(final Type type, final Object errorObject) {
+        this(type);
+        this.errorObject = errorObject;
+    }
+
     /**
      * @param type
      * @param message
@@ -50,14 +60,7 @@ public class ServiceException extends Exception {
         this.errorObject = errorObject;
     }
 
-    /**
-     * @param type
-     * @param errorObject
-     */
-    public ServiceException(final Type type, final Object errorObject) {
-        this(type);
-        this.errorObject = errorObject;
-    }
+
 
     /**
      * @return the type

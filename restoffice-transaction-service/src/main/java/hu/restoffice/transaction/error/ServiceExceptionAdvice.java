@@ -1,8 +1,6 @@
 package hu.restoffice.transaction.error;
 
-import java.net.URI;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -10,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 /**
@@ -18,8 +17,17 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class ServiceExceptionAdvice extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
+    protected ResponseEntity<?> handleMethodArgumentTypeMismatchException(final MethodArgumentTypeMismatchException ex,
+            final WebRequest request) {
+
+        return handleExceptionInternal(ex,
+                new ErrorBody(HttpStatus.BAD_REQUEST, ex.getName(), ex.getRequiredType().getSimpleName()),
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
     @ExceptionHandler(value = ServiceException.class)
-    public ResponseEntity<?> handleServiceException(final ServiceException ex, final WebRequest request) {
+    protected ResponseEntity<?> handleServiceException(final ServiceException ex, final WebRequest request) {
         HttpStatus status;
         switch(ex.getType()) {
             case ALREADY_EXISTS:
@@ -33,35 +41,40 @@ public class ServiceExceptionAdvice extends ResponseEntityExceptionHandler {
                 status = HttpStatus.INTERNAL_SERVER_ERROR;
                 break;
         }
-        return handleExceptionInternal(ex, new ErrorBody(ex, status), new HttpHeaders(), status, request);
+        return handleExceptionInternal(ex,
+                new ErrorBody(status, ex.getMessage(), ex.getErrorObject().orElse("no description").toString()),
+                new HttpHeaders(), status, request);
     }
 
-    public static class ErrorBody {
+    protected final static class ErrorBody {
 
-        private LocalDateTime timeStamp;
-        private URI self;
-        private HttpStatus status;
+        private LocalDateTime timestamp;
+        private int status;
+        private String error;
         private String message;
-        private Optional<Object> errorObject;
+        private String description;
 
-        private ErrorBody(final ServiceException ex, final HttpStatus status) {
-            timeStamp = LocalDateTime.now();
-            this.status = status;
-            message = ex.getMessage();
-            errorObject = ex.getErrorObject();
+        private ErrorBody(final HttpStatus status, final String message,
+                final String description) {
+            timestamp = LocalDateTime.now();
+            this.status = status.value();
+            error = status.getReasonPhrase();
+            this.message = message;
+            this.description = description;
         }
+
 
         /**
          * @return the timeStamp
          */
-        public LocalDateTime getTimeStamp() {
-            return timeStamp;
+        public LocalDateTime getTimestamp() {
+            return timestamp;
         }
 
         /**
          * @return the status
          */
-        public HttpStatus getStatus() {
+        public int getStatus() {
             return status;
         }
 
@@ -73,12 +86,17 @@ public class ServiceExceptionAdvice extends ResponseEntityExceptionHandler {
         }
 
         /**
-         * @return the errorObject
+         * @return the error
          */
-        public Optional<Object> getErrorObject() {
-            return errorObject;
+        public String getError() {
+            return error;
         }
 
+        /**
+         * @return the description
+         */
+        public String getDescription() {
+            return description;
+        }
     }
-
 }
