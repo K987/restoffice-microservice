@@ -69,6 +69,12 @@ public class PartnerControllerRestImpl {
         return ResponseEntity.ok(service.update(id, partner));
     }
 
+    @GetMapping(path = "/search", params = "name")
+    public ResponseEntity<List<Partner>> update(@RequestParam final String name)
+            throws ServiceException {
+        return ResponseEntity.ok(service.serachByName(name));
+    }
+
     private URI createPathTo(final Long partnerId) {
         return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(partnerId).toUri();
     }

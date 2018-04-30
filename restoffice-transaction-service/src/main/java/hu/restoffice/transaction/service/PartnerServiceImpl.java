@@ -2,8 +2,6 @@ package hu.restoffice.transaction.service;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,10 +16,8 @@ import hu.restoffice.transaction.repository.PartnerRepository;
  *
  */
 @Service
-@Transactional(propagation = Propagation.REQUIRES_NEW)
+@Transactional(propagation = Propagation.REQUIRED)
 public class PartnerServiceImpl implements PartnerService {
-
-    private static final Logger log = LogManager.getLogger();
 
     @Autowired
     private PartnerRepository repo;
@@ -40,7 +36,6 @@ public class PartnerServiceImpl implements PartnerService {
             try {
                 return repo.saveAndFlush(partner);
             } catch (Exception e) {
-                log.error(e.getLocalizedMessage());
                 throw new ServiceException(Type.UNKNOWN, "unknown error occured when saving new partner", partner);
             }
         }
@@ -59,7 +54,6 @@ public class PartnerServiceImpl implements PartnerService {
         try {
             return repo.saveAndFlush(old);
         } catch (Exception e) {
-            log.error(e.getLocalizedMessage());
             throw new ServiceException(Type.UNKNOWN, "unknown error occured when updating partner", partner);
         }
     }
@@ -101,7 +95,6 @@ public class PartnerServiceImpl implements PartnerService {
         try {
             repo.deleteById(partnerId);
         } catch (Exception e) {
-            log.error(e.getLocalizedMessage());
             throw new ServiceException(Type.UNKNOWN, "error when deleting partner", partnerId);
         }
         return toDel;
@@ -118,7 +111,7 @@ public class PartnerServiceImpl implements PartnerService {
         if (technical == null) {
             return repo.findAll();
         } else {
-            return repo.findAll(technical);
+            return repo.findByTechnical(technical);
         }
     }
     /*
@@ -129,6 +122,17 @@ public class PartnerServiceImpl implements PartnerService {
     @Override
     public List<Partner> deleteUnused() throws ServiceException {
         throw new UnsupportedOperationException("operation not yet implemented");
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see hu.restoffice.transaction.service.PartnerService#serachByName(java.lang.
+     * String)
+     */
+    @Override
+    public List<Partner> serachByName(final String name) {
+        return repo.findByNameContainingIgnoreCase(name);
     }
 
     /**
@@ -142,9 +146,9 @@ public class PartnerServiceImpl implements PartnerService {
         String account = newPartner.getAccount();
         if (account != null)
             oldPartner.setAccount(account);
-        Boolean technical = newPartner.getParnterTechnical();
+        Boolean technical = newPartner.isTechnical();
         if (technical != null) {
-            oldPartner.setParnterTechnical(technical);
+            oldPartner.setTechnical(technical);
         }
     }
 
