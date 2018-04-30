@@ -24,5 +24,6 @@ public interface PartnerService {
 
     List<Partner> deleteUnused() throws ServiceException;
 
+    List<Partner> serachByName(String name);
 
 }
