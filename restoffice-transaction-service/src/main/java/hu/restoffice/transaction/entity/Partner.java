@@ -71,11 +71,11 @@ public class Partner implements Serializable {
         return id;
     }
 
-    public Boolean getParnterTechnical() {
+    public Boolean isTechnical() {
         return technical;
     }
 
-    public void setParnterTechnical(final Boolean parnterTechnical) {
+    public void setTechnical(final Boolean parnterTechnical) {
         technical = parnterTechnical;
     }
 
