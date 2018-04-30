@@ -17,11 +17,18 @@ public class ServiceProperties {
     @Value("${message}")
     private String message = "";
 
+    @Value("${server.port}")
+    private String port;
+
     public String getServiceName() {
         return serviceName;
     }
 
     public String getMassage() {
         return message;
+    }
+
+    public String getPort() {
+        return port;
     }
 }
