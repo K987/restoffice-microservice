@@ -26,4 +26,7 @@ public interface PartnerRepository extends JpaRepository<Partner, Long> {
     @Query("select p.contact from Partner p where p.id = :id")
     Optional<PartnerContact> findContactByPartnerId(@Param("id") Long id);
 
+    @Query("select p from Partner p LEFT JOIN FETCH p.expenses e LEFT JOIN FETCH p.incomes i WHERE p.expenses IS EMPTY AND p.incomes IS EMPTY")
+    List<Partner> findUnused();
+
 }

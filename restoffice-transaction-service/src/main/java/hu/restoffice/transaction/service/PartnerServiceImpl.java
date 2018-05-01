@@ -50,8 +50,10 @@ public class PartnerServiceImpl extends AbstractCRUDService<Partner, PartnerRepo
      * @see hu.restoffice.transaction.service.PartnerService#deleteUnused()
      */
     @Override
-    public List<Partner> deleteUnused() throws ServiceException {
-        throw new UnsupportedOperationException("operation not yet implemented");
+    public List<Partner> deleteNotUsed() throws ServiceException {
+        List<Partner> notUsed = repo.findUnused();
+        repo.deleteAll(notUsed);
+        return notUsed;
     }
 
     /*

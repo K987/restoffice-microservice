@@ -17,11 +17,12 @@ public interface PartnerService extends CrudService<Partner> {
 
     List<Partner> serachByName(String name) throws ServiceException;
 
-    List<Partner> deleteUnused() throws ServiceException;
+    List<Partner> deleteNotUsed() throws ServiceException;
 
     PartnerContact getContact(Long partnerId) throws ServiceException;
 
     Partner updateContact(Long id, PartnerContact contact) throws ServiceException;
 
     Partner deleteContact(Long partnerId) throws ServiceException;
+
 }
