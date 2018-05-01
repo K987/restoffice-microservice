@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.restoffice.transaction.controller.util.ControllerUtils;
+import hu.restoffice.transaction.converter.PartnerConverterService;
+import hu.restoffice.transaction.domain.PartnerStub;
 import hu.restoffice.transaction.entity.Partner;
 import hu.restoffice.transaction.entity.PartnerContact;
 import hu.restoffice.transaction.error.ServiceException;
@@ -32,13 +34,16 @@ public class PartnerControllerRestImpl implements PartnerController {
     @Autowired
     private PartnerService service;
 
+    @Autowired
+    private PartnerConverterService converter;
+
     /* (non-Javadoc)
      * @see hu.restoffice.transaction.controller.PartnerController#findAll()
      */
     @Override
     @GetMapping
-    public ResponseEntity<List<Partner>> findAll() throws ServiceException {
-        return ResponseEntity.ok(service.findAll(null));
+    public ResponseEntity<List<PartnerStub>> findAll() throws ServiceException {
+        return ResponseEntity.ok(from(service.findAll(null)));
     }
 
     /* (non-Javadoc)
@@ -46,8 +51,8 @@ public class PartnerControllerRestImpl implements PartnerController {
      */
     @Override
     @PostMapping(consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> create(@RequestBody @Validated final Partner partner) throws ServiceException {
-        Partner createdPartner = service.add(partner);
+    public ResponseEntity<?> create(@RequestBody @Validated final PartnerStub partner) throws ServiceException {
+        Partner createdPartner = service.add(to(partner));
         return ResponseEntity.created(ControllerUtils.createPathTo(createdPartner.getId())).build();
     }
 
@@ -56,9 +61,9 @@ public class PartnerControllerRestImpl implements PartnerController {
      */
     @Override
     @GetMapping(params = "technical")
-    public ResponseEntity<List<Partner>> findAll(@RequestParam("technical") final Boolean technical)
+    public ResponseEntity<List<PartnerStub>> findAll(@RequestParam("technical") final Boolean technical)
             throws ServiceException {
-        return ResponseEntity.ok(service.findAll(technical));
+        return ResponseEntity.ok(from(service.findAll(technical)));
     }
 
     /* (non-Javadoc)
@@ -66,8 +71,8 @@ public class PartnerControllerRestImpl implements PartnerController {
      */
     @Override
     @GetMapping(params = "name")
-    public ResponseEntity<Partner> findByName(@RequestParam("name") final String name) throws ServiceException {
-        return ResponseEntity.ok(service.findByName(name));
+    public ResponseEntity<PartnerStub> findByName(@RequestParam("name") final String name) throws ServiceException {
+        return ResponseEntity.ok(from(service.findByName(name)));
     }
 
     /* (non-Javadoc)
@@ -75,8 +80,8 @@ public class PartnerControllerRestImpl implements PartnerController {
      */
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<Partner> getById(@PathVariable final Long id) throws ServiceException {
-        return ResponseEntity.ok(service.findById(id));
+    public ResponseEntity<PartnerStub> getById(@PathVariable final Long id) throws ServiceException {
+        return ResponseEntity.ok(from(service.findById(id)));
     }
 
     /* (non-Javadoc)
@@ -84,8 +89,8 @@ public class PartnerControllerRestImpl implements PartnerController {
      */
     @Override
     @DeleteMapping("/{id}")
-    public ResponseEntity<Partner> deleteById(@PathVariable final Long id) throws ServiceException {
-        return ResponseEntity.ok(service.delete(id));
+    public ResponseEntity<PartnerStub> deleteById(@PathVariable final Long id) throws ServiceException {
+        return ResponseEntity.ok(from(service.delete(id)));
     }
 
     /* (non-Javadoc)
@@ -93,10 +98,10 @@ public class PartnerControllerRestImpl implements PartnerController {
      */
     @Override
     @PostMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Partner> update(@PathVariable("id") final Long id,
-            @RequestBody @Validated final Partner partner)
+    public ResponseEntity<PartnerStub> update(@PathVariable("id") final Long id,
+            @RequestBody @Validated final PartnerStub partner)
                     throws ServiceException {
-        return ResponseEntity.ok(service.update(id, partner));
+        return ResponseEntity.ok(from(service.update(id, to(partner))));
     }
 
     /* (non-Javadoc)
@@ -104,9 +109,9 @@ public class PartnerControllerRestImpl implements PartnerController {
      */
     @Override
     @GetMapping(path = "/search", params = "name")
-    public ResponseEntity<List<Partner>> update(@RequestParam final String name)
+    public ResponseEntity<List<PartnerStub>> update(@RequestParam final String name)
             throws ServiceException {
-        return ResponseEntity.ok(service.serachByName(name));
+        return ResponseEntity.ok(from(service.serachByName(name)));
     }
 
     /*
@@ -131,10 +136,10 @@ public class PartnerControllerRestImpl implements PartnerController {
      */
     @Override
     @PostMapping(path = "{id}/contact", consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Partner> updateContact(@PathVariable("id") final Long id,
+    public ResponseEntity<PartnerStub> updateContact(@PathVariable("id") final Long id,
             @RequestBody @Validated final PartnerContact contact)
                     throws ServiceException {
-        return ResponseEntity.ok(service.updateContact(id, contact));
+        return ResponseEntity.ok(from(service.updateContact(id, contact)));
     }
 
     /*
@@ -146,8 +151,44 @@ public class PartnerControllerRestImpl implements PartnerController {
      */
     @Override
     @DeleteMapping(path = "{id}/contact")
-    public ResponseEntity<Partner> deleteContact(@PathVariable("id") final Long id) throws ServiceException {
-        return ResponseEntity.ok(service.deleteContact(id));
+    public ResponseEntity<PartnerStub> deleteContact(@PathVariable("id") final Long id) throws ServiceException {
+        return ResponseEntity.ok(from(service.deleteContact(id)));
+    }
+
+    /**
+     * @param entity
+     * @return
+     * @see hu.restoffice.transaction.converter.DefaultConverterService#from(java.lang.Object)
+     */
+    public PartnerStub from(final Partner entity) {
+        return converter.from(entity);
+    }
+
+    /**
+     * @param stub
+     * @return
+     * @see hu.restoffice.transaction.converter.DefaultConverterService#to(java.lang.Object)
+     */
+    public Partner to(final PartnerStub stub) {
+        return converter.to(stub);
+    }
+
+    /**
+     * @param entity
+     * @return
+     * @see hu.restoffice.transaction.converter.DefaultConverterService#from(java.util.List)
+     */
+    public List<PartnerStub> from(final List<Partner> entity) {
+        return converter.from(entity);
+    }
+
+    /**
+     * @param stubs
+     * @return
+     * @see hu.restoffice.transaction.converter.DefaultConverterService#to(java.util.List)
+     */
+    public List<Partner> to(final List<PartnerStub> stubs) {
+        return converter.to(stubs);
     }
 
 }

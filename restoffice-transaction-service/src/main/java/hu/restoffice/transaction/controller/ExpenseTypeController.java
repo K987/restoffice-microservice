@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.restoffice.transaction.controller.util.ControllerUtils;
+import hu.restoffice.transaction.converter.ExpenseTypeConverterService;
+import hu.restoffice.transaction.domain.ExpenseTypeStub;
 import hu.restoffice.transaction.entity.ExpenseType;
 import hu.restoffice.transaction.error.ServiceException;
 import hu.restoffice.transaction.service.ExpenseTypeService;
@@ -31,44 +33,47 @@ public class ExpenseTypeController {
     @Autowired
     private ExpenseTypeService service;
 
+    @Autowired
+    private ExpenseTypeConverterService converter;
 
     @GetMapping
-    public ResponseEntity<List<ExpenseType>> findAll() throws ServiceException {
-        return ResponseEntity.ok(service.findAll());
+    public ResponseEntity<List<ExpenseTypeStub>> findAll() throws ServiceException {
+        return ResponseEntity.ok(converter.from(service.findAll()));
     }
 
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> create(@RequestBody @Validated final ExpenseType expenseType) throws ServiceException {
-        ExpenseType createdPartner = service.add(expenseType);
+    public ResponseEntity<?> create(@RequestBody @Validated final ExpenseTypeStub expenseType) throws ServiceException {
+        ExpenseType createdPartner = service.add(converter.to(expenseType));
         return ResponseEntity.created(ControllerUtils.createPathTo(createdPartner.getId())).build();
     }
 
     @GetMapping(params = "prodRelated")
-    public ResponseEntity<List<ExpenseType>> findAll(@RequestParam("prodRelated") final Boolean prodRelated)
+    public ResponseEntity<List<ExpenseTypeStub>> findAll(@RequestParam("prodRelated") final Boolean prodRelated)
             throws ServiceException {
-        return ResponseEntity.ok(service.findAll(prodRelated));
+        return ResponseEntity.ok(converter.from(service.findAll(prodRelated)));
     }
 
     @GetMapping(params = "name")
-    public ResponseEntity<ExpenseType> findByName(@RequestParam("name") final String name) throws ServiceException {
-        return ResponseEntity.ok(service.findByName(name));
+    public ResponseEntity<ExpenseTypeStub> findByName(@RequestParam("name") final String name) throws ServiceException {
+        return ResponseEntity.ok(converter.from(service.findByName(name)));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ExpenseType> getById(@PathVariable final Long id) throws ServiceException {
-        return ResponseEntity.ok(service.findById(id));
+    public ResponseEntity<ExpenseTypeStub> getById(@PathVariable final Long id) throws ServiceException {
+        return ResponseEntity.ok(converter.from(service.findById(id)));
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ExpenseType> deleteById(@PathVariable final Long id) throws ServiceException {
-        return ResponseEntity.ok(service.delete(id));
+    public ResponseEntity<ExpenseTypeStub> deleteById(@PathVariable final Long id) throws ServiceException {
+        return ResponseEntity.ok(converter.from(service.delete(id)));
     }
 
     @PostMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity<ExpenseType> update(@PathVariable("id") final Long id,
-            @RequestBody @Validated final ExpenseType expenseType) throws ServiceException {
-        return ResponseEntity.ok(service.update(id, expenseType));
+    public ResponseEntity<ExpenseTypeStub> update(@PathVariable("id") final Long id,
+            @RequestBody @Validated final ExpenseTypeStub expenseType) throws ServiceException {
+        return ResponseEntity.ok(converter.from(service.update(id, converter.to(expenseType))));
     }
+
 }

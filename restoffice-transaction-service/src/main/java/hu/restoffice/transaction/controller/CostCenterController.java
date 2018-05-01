@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.restoffice.transaction.controller.util.ControllerUtils;
+import hu.restoffice.transaction.converter.ConstCenterConverterService;
+import hu.restoffice.transaction.domain.CostCenterStub;
 import hu.restoffice.transaction.entity.CostCenter;
 import hu.restoffice.transaction.error.ServiceException;
 import hu.restoffice.transaction.service.CostCenterService;
@@ -31,42 +33,45 @@ public class CostCenterController {
     @Autowired
     private CostCenterService service;
 
+    @Autowired
+    private ConstCenterConverterService converter;
+
     @GetMapping
-    public ResponseEntity<List<CostCenter>> findAll() throws ServiceException {
-        return ResponseEntity.ok(service.findAll());
+    public ResponseEntity<List<CostCenterStub>> findAll() throws ServiceException {
+        return ResponseEntity.ok(converter.from(service.findAll()));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> create(@RequestBody @Validated final CostCenter costCenter) throws ServiceException {
-        CostCenter createdPartner = service.add(costCenter);
+    public ResponseEntity<?> create(@RequestBody @Validated final CostCenterStub costCenter) throws ServiceException {
+        CostCenter createdPartner = service.add(converter.to(costCenter));
         return ResponseEntity.created(ControllerUtils.createPathTo(createdPartner.getId())).build();
     }
 
     @GetMapping("/default")
-    public ResponseEntity<CostCenter> findDefault()
+    public ResponseEntity<CostCenterStub> findDefault()
             throws ServiceException {
-        return ResponseEntity.ok(service.getDefault());
+        return ResponseEntity.ok(converter.from(service.getDefault()));
     }
 
     @GetMapping(params = "name")
-    public ResponseEntity<CostCenter> findByName(@RequestParam("name") final String name) throws ServiceException {
-        return ResponseEntity.ok(service.findByName(name));
+    public ResponseEntity<CostCenterStub> findByName(@RequestParam("name") final String name) throws ServiceException {
+        return ResponseEntity.ok(converter.from(service.findByName(name)));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CostCenter> getById(@PathVariable final Long id) throws ServiceException {
-        return ResponseEntity.ok(service.findById(id));
+    public ResponseEntity<CostCenterStub> getById(@PathVariable final Long id) throws ServiceException {
+        return ResponseEntity.ok(converter.from(service.findById(id)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CostCenter> deleteById(@PathVariable final Long id) throws ServiceException {
-        return ResponseEntity.ok(service.delete(id));
+    public ResponseEntity<CostCenterStub> deleteById(@PathVariable final Long id) throws ServiceException {
+        return ResponseEntity.ok(converter.from(service.delete(id)));
     }
 
     @PostMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity<CostCenter> update(@PathVariable("id") final Long id,
-            @RequestBody @Validated final CostCenter costCenter) throws ServiceException {
-        return ResponseEntity.ok(service.update(id, costCenter));
+    public ResponseEntity<CostCenterStub> update(@PathVariable("id") final Long id,
+            @RequestBody @Validated final CostCenterStub costCenter) throws ServiceException {
+        return ResponseEntity.ok(converter.from(service.update(id, converter.to(costCenter))));
     }
 
 }

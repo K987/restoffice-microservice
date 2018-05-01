@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.restoffice.transaction.controller.util.ControllerUtils;
+import hu.restoffice.transaction.converter.IncomeTypeConverterService;
+import hu.restoffice.transaction.domain.IncomeTypeStub;
 import hu.restoffice.transaction.entity.IncomeType;
 import hu.restoffice.transaction.error.ServiceException;
 import hu.restoffice.transaction.service.IncomeTypeService;
@@ -31,44 +33,83 @@ public class IncomeTypeController {
     @Autowired
     private IncomeTypeService service;
 
+    @Autowired
+    private IncomeTypeConverterService converter;
 
     @GetMapping
-    public ResponseEntity<List<IncomeType>> findAll() throws ServiceException {
-        return ResponseEntity.ok(service.findAll());
+    public ResponseEntity<List<IncomeTypeStub>> findAll() throws ServiceException {
+        return ResponseEntity.ok(from(service.findAll()));
     }
 
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> create(@RequestBody @Validated final IncomeType incomeType) throws ServiceException {
-        IncomeType createdPartner = service.add(incomeType);
+    public ResponseEntity<?> create(@RequestBody @Validated final IncomeTypeStub incomeType) throws ServiceException {
+        IncomeType createdPartner = service.add(to(incomeType));
         return ResponseEntity.created(ControllerUtils.createPathTo(createdPartner.getId())).build();
     }
 
     @GetMapping(params = "prodRelated")
-    public ResponseEntity<List<IncomeType>> findAll(@RequestParam("prodRelated") final Boolean prodRelated)
+    public ResponseEntity<List<IncomeTypeStub>> findAll(@RequestParam("prodRelated") final Boolean prodRelated)
             throws ServiceException {
-        return ResponseEntity.ok(service.findAll(prodRelated));
+        return ResponseEntity.ok(from(service.findAll(prodRelated)));
     }
 
     @GetMapping(params = "name")
-    public ResponseEntity<IncomeType> findByName(@RequestParam("name") final String name) throws ServiceException {
-        return ResponseEntity.ok(service.findByName(name));
+    public ResponseEntity<IncomeTypeStub> findByName(@RequestParam("name") final String name) throws ServiceException {
+        return ResponseEntity.ok(from(service.findByName(name)));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<IncomeType> getById(@PathVariable final Long id) throws ServiceException {
-        return ResponseEntity.ok(service.findById(id));
+    public ResponseEntity<IncomeTypeStub> getById(@PathVariable final Long id) throws ServiceException {
+        return ResponseEntity.ok(from(service.findById(id)));
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<IncomeType> deleteById(@PathVariable final Long id) throws ServiceException {
-        return ResponseEntity.ok(service.delete(id));
+    public ResponseEntity<IncomeTypeStub> deleteById(@PathVariable final Long id) throws ServiceException {
+        return ResponseEntity.ok(from(service.delete(id)));
     }
 
     @PostMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity<IncomeType> update(@PathVariable("id") final Long id,
-            @RequestBody @Validated final IncomeType incomeType) throws ServiceException {
-        return ResponseEntity.ok(service.update(id, incomeType));
+    public ResponseEntity<IncomeTypeStub> update(@PathVariable("id") final Long id,
+            @RequestBody @Validated final IncomeTypeStub incomeType) throws ServiceException {
+        return ResponseEntity.ok(from(service.update(id, to(incomeType))));
     }
+
+    /**
+     * @param entity
+     * @return
+     * @see hu.restoffice.transaction.converter.DefaultConverterService#from(java.lang.Object)
+     */
+    private IncomeTypeStub from(final IncomeType entity) {
+        return converter.from(entity);
+    }
+
+    /**
+     * @param stub
+     * @return
+     * @see hu.restoffice.transaction.converter.DefaultConverterService#to(java.lang.Object)
+     */
+    private IncomeType to(final IncomeTypeStub stub) {
+        return converter.to(stub);
+    }
+
+    /**
+     * @param entity
+     * @return
+     * @see hu.restoffice.transaction.converter.DefaultConverterService#from(java.util.List)
+     */
+    private List<IncomeTypeStub> from(final List<IncomeType> entity) {
+        return converter.from(entity);
+    }
+
+    /**
+     * @param stubs
+     * @return
+     * @see hu.restoffice.transaction.converter.DefaultConverterService#to(java.util.List)
+     */
+    private List<IncomeType> to(final List<IncomeTypeStub> stubs) {
+        return converter.to(stubs);
+    }
+
 }
