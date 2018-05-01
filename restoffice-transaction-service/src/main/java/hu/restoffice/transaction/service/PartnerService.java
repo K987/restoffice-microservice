@@ -3,27 +3,25 @@ package hu.restoffice.transaction.service;
 import java.util.List;
 
 import hu.restoffice.transaction.entity.Partner;
+import hu.restoffice.transaction.entity.PartnerContact;
 import hu.restoffice.transaction.error.ServiceException;
 
 /**
  *
  */
-public interface PartnerService {
-
-    Partner add(final Partner partner) throws ServiceException;
-
-    Partner update(final Long partnerId, final Partner partner) throws ServiceException;
-
-    Partner findByName(final String patnerName) throws ServiceException;
-
-    Partner findyById(final Long partnerId) throws ServiceException;
-
-    Partner delete(final Long partnerId) throws ServiceException;
+public interface PartnerService extends CrudService<Partner> {
 
     List<Partner> findAll(final Boolean technical) throws ServiceException;
 
+    Partner findByName(final String partnerName) throws ServiceException;
+
+    List<Partner> serachByName(String name) throws ServiceException;
+
     List<Partner> deleteUnused() throws ServiceException;
 
-    List<Partner> serachByName(String name);
+    PartnerContact getContact(Long partnerId) throws ServiceException;
 
+    Partner updateContact(Long id, PartnerContact contact) throws ServiceException;
+
+    Partner deleteContact(Long partnerId) throws ServiceException;
 }

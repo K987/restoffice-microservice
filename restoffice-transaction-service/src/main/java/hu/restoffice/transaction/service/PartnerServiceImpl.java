@@ -2,12 +2,10 @@ package hu.restoffice.transaction.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import hu.restoffice.transaction.entity.Partner;
+import hu.restoffice.transaction.entity.PartnerContact;
 import hu.restoffice.transaction.error.ServiceException;
 import hu.restoffice.transaction.error.ServiceException.Type;
 import hu.restoffice.transaction.repository.PartnerRepository;
@@ -16,47 +14,8 @@ import hu.restoffice.transaction.repository.PartnerRepository;
  *
  */
 @Service
-@Transactional(propagation = Propagation.REQUIRED)
-public class PartnerServiceImpl implements PartnerService {
+public class PartnerServiceImpl extends AbstractCRUDService<Partner, PartnerRepository> implements PartnerService {
 
-    @Autowired
-    private PartnerRepository repo;
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see hu.restoffice.transaction.service.PartnerService#add(hu.restoffice.
-     * transaction.entity.Partner)
-     */
-    @Override
-    public Partner add(final Partner partner) throws ServiceException {
-        if (repo.findByNameIgnoreCase(partner.getName()).isPresent()) {
-            throw new ServiceException(Type.ALREADY_EXISTS, "partner already exists with the same name", partner);
-        } else {
-            try {
-                return repo.saveAndFlush(partner);
-            } catch (Exception e) {
-                throw new ServiceException(Type.UNKNOWN, "unknown error occured when saving new partner", partner);
-            }
-        }
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see hu.restoffice.transaction.service.PartnerService#update(hu.restoffice.
-     * transaction.entity.Partner)
-     */
-    @Override
-    public Partner update(final Long partnerId, final Partner partner) throws ServiceException {
-        Partner old = this.findyById(partnerId);
-        update(old, partner);
-        try {
-            return repo.saveAndFlush(old);
-        } catch (Exception e) {
-            throw new ServiceException(Type.UNKNOWN, "unknown error occured when updating partner", partner);
-        }
-    }
 
     /*
      * (non-Javadoc)
@@ -74,36 +33,6 @@ public class PartnerServiceImpl implements PartnerService {
      * (non-Javadoc)
      *
      * @see
-     * hu.restoffice.transaction.service.PartnerService#findyById(java.lang.Long)
-     */
-    @Override
-    public Partner findyById(final Long partnerId) throws ServiceException {
-        return repo.findById(partnerId).orElseThrow(() -> new ServiceException(Type.NOT_EXISTS,
-                "partner not exists you might want to create it", partnerId));
-
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see hu.restoffice.transaction.service.PartnerService#delete(hu.restoffice.
-     * transaction.entity.Partner)
-     */
-    @Override
-    public Partner delete(final Long partnerId) throws ServiceException {
-        Partner toDel = this.findyById(partnerId);
-        try {
-            repo.deleteById(partnerId);
-        } catch (Exception e) {
-            throw new ServiceException(Type.UNKNOWN, "error when deleting partner", partnerId);
-        }
-        return toDel;
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see
      * hu.restoffice.transaction.service.PartnerService#findAll(java.lang.Boolean)
      */
     @Override
@@ -114,6 +43,7 @@ public class PartnerServiceImpl implements PartnerService {
             return repo.findByTechnical(technical);
         }
     }
+
     /*
      * (non-Javadoc)
      *
@@ -135,21 +65,79 @@ public class PartnerServiceImpl implements PartnerService {
         return repo.findByNameContainingIgnoreCase(name);
     }
 
-    /**
-     * @param oldPartner
-     * @param newPartner
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.transaction.service.PartnerService#getContactById(java.lang.
+     * Long)
      */
-    private void update(final Partner oldPartner, final Partner newPartner) {
-        String name = newPartner.getName();
+    @Override
+    public PartnerContact getContact(final Long partnerId) throws ServiceException {
+        return repo.findContactByPartnerId(partnerId)
+                .orElseThrow(() -> new ServiceException(Type.NOT_EXISTS, "contact not exists", partnerId));
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.transaction.service.PartnerService#updateContact(java.lang.
+     * Long, hu.restoffice.transaction.entity.PartnerContact)
+     */
+    @Override
+    public Partner updateContact(final Long id, final PartnerContact contact) throws ServiceException {
+        Partner p = this.findById(id);
+        p.setContact(contact);
+        return saveAndFlush(p);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.transaction.service.PartnerService#deleteContactId(java.lang.
+     * Long)
+     */
+    @Override
+    public Partner deleteContact(final Long partnerId) throws ServiceException {
+        Partner p = this.findById(partnerId);
+        p.setContact(null);
+        return saveAndFlush(p);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.transaction.service.AbstractCRUDService#checkExistence(java.
+     * lang.Object)
+     */
+    @Override
+    protected boolean checkExistence(final Partner entity) {
+        return repo.findByNameIgnoreCase(entity.getName()).isPresent();
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.transaction.service.AbstractCRUDService#updateFields(java.lang.
+     * Object, java.lang.Object)
+     */
+    @Override
+    protected void updateFields(final Partner old, final Partner entity) {
+        String name = entity.getName();
         if (name != null)
-            oldPartner.setName(name);
-        String account = newPartner.getAccount();
+            old.setName(name);
+        String account = entity.getAccount();
         if (account != null)
-            oldPartner.setAccount(account);
-        Boolean technical = newPartner.isTechnical();
+            old.setAccount(account);
+        Boolean technical = entity.isTechnical();
         if (technical != null) {
-            oldPartner.setTechnical(technical);
+            old.setTechnical(technical);
         }
+
     }
 
 }
