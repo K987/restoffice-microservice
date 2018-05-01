@@ -9,6 +9,9 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
@@ -19,7 +22,6 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "incomes")
-@SequenceGenerator(name = "TRANSACTION_ID_GENERATOR", sequenceName = "INCOMES_INCOME_ID_SEQ")
 @AttributeOverrides(value = { @AttributeOverride(name = "id", column = @Column(name = "income_id")),
         @AttributeOverride(name = "docId", column = @Column(name = "income_doc_id")),
         @AttributeOverride(name = "docType", column = @Column(name = "income_doc_type")),
@@ -41,6 +43,11 @@ public class Income extends FinancialTransaction implements Serializable {
 
     private static final long serialVersionUID = 7025564263254038236L;
 
+    @Id
+    @SequenceGenerator(name = "INCOMES_INCOME_ID_GENERATOR", sequenceName = "INCOMES_INCOME_ID_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "INCOMES_INCOME_ID_GENERATOR")
+    private Long id;
+
     // bi-directional many-to-one association to IncType
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "income_type", nullable = false)
@@ -48,6 +55,13 @@ public class Income extends FinancialTransaction implements Serializable {
 
     // constructors
     public Income() {
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
     }
 
     public IncomeType getIncType() {

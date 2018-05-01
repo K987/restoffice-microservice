@@ -11,19 +11,10 @@ import javax.persistence.Embedded;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Positive;
 
 import hu.restoffice.transaction.domain.DocumentType;
 import hu.restoffice.transaction.domain.PaymentMethod;
@@ -37,17 +28,11 @@ import hu.restoffice.transaction.domain.PaymentMethod;
 @MappedSuperclass
 public abstract class FinancialTransaction {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRANSACTION_ID_GENERATOR")
-    private Long id;
-
     @Column(length = 100)
-    @NotBlank
     private String docId;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
-    @NotNull
     private DocumentType docType;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -56,27 +41,20 @@ public abstract class FinancialTransaction {
 
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
-    @NotNull
     private PaymentMethod payMethod;
 
     @Column(nullable = false)
-    @Positive
     private BigDecimal grossTotal;
 
     @Column(length = 200)
     private String description;
 
-    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
-    @FutureOrPresent
     private Date registered;
 
-    @Temporal(TemporalType.DATE)
     @FutureOrPresent
     private Date expiry;
 
-    @Temporal(TemporalType.DATE)
-    @PastOrPresent
     private Date payed;
 
     @Embedded
@@ -90,13 +68,6 @@ public abstract class FinancialTransaction {
     // constructors
     public FinancialTransaction() {
 
-    }
-
-    /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
     }
 
     // getters and setters

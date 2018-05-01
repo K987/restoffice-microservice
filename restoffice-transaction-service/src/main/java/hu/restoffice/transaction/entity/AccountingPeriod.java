@@ -4,8 +4,6 @@ import java.sql.Date;
 import java.util.Calendar;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 /**
@@ -14,10 +12,8 @@ import javax.persistence.Transient;
 @Embeddable
 public class AccountingPeriod {
 
-    @Temporal(TemporalType.DATE)
     private Date startDate;
 
-    @Temporal(TemporalType.DATE)
     private Date endDate;
 
     @Transient

@@ -9,6 +9,9 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
@@ -39,8 +42,12 @@ import javax.persistence.Table;
 })
 public class Expense extends FinancialTransaction implements Serializable {
 
-
     private static final long serialVersionUID = 1451758378820116069L;
+
+    @Id
+    @SequenceGenerator(name = "EXPENSES_EXPENSE_ID_GENERATOR", sequenceName = "INCOMES_INCOME_ID_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EXPENSES_EXPENSE_ID_GENERATOR")
+    private Long id;
 
     // bi-directional many-to-one association to CostCenter
     @ManyToOne(fetch = FetchType.EAGER)
@@ -53,6 +60,13 @@ public class Expense extends FinancialTransaction implements Serializable {
     private ExpenseType expType;
 
     public Expense() {
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
     }
 
     /**

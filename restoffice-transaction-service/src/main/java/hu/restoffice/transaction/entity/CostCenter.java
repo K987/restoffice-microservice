@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "cost_centers")
@@ -28,11 +26,9 @@ public class CostCenter implements Serializable {
     private Long id;
 
     @Column(name = "cost_center_default", nullable = false)
-    @NotNull
     private Boolean defaultCostCenter;
 
     @Column(name = "cost_center_name", nullable = false, unique = true, length = 100)
-    @NotBlank
     private String name;
 
     // bi-directional many-to-one association to Expense

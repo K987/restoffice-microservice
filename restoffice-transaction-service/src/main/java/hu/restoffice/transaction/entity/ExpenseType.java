@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -31,11 +29,9 @@ public class ExpenseType implements Serializable {
     private Long id;
 
     @Column(name = "exp_type_name", nullable = false, unique = true, length = 100)
-    @NotBlank
     private String name;
 
     @Column(name = "exp_type_prod_related", nullable = false)
-    @NotNull
     private Boolean prodRelated;
 
     // bi-directional many-to-one association to Expense

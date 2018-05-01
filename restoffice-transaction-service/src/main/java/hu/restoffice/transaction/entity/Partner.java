@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -30,14 +29,12 @@ public class Partner implements Serializable {
     @Column(name = "partner_id", updatable = false, unique = true, nullable = false)
     private Long id;
 
-    @NotNull
     @Column(name = "partner_technical", nullable = false)
     private Boolean technical;
 
     @Column(name = "partner_account", length = 100)
     private String account;
 
-    @NotNull
     @Column(name = "partner_name", nullable = false, length = 100)
     private String name;
 

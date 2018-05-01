@@ -13,7 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -30,11 +29,9 @@ public class IncomeType implements Serializable {
     @Column(name = "income_type_id")
     private Long id;
 
-    @NotBlank
     @Column(name = "income_type_name", unique = true, nullable = false, length = 100)
     private String name;
 
-    @NotNull
     @Column(name = "income_type_prod_related", nullable = false)
     private Boolean prodRelated;
 
