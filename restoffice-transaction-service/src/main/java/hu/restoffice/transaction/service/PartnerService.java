@@ -9,7 +9,7 @@ import hu.restoffice.transaction.error.ServiceException;
 /**
  *
  */
-public interface PartnerService extends CrudService<Partner> {
+public interface PartnerService extends CRUDService<Partner> {
 
     List<Partner> findAll(final Boolean technical) throws ServiceException;
 

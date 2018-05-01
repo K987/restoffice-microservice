@@ -103,13 +103,14 @@ public class IncomeTypeController {
         return converter.from(entity);
     }
 
-    /**
-     * @param stubs
-     * @return
-     * @see hu.restoffice.transaction.converter.DefaultConverterService#to(java.util.List)
-     */
-    private List<IncomeType> to(final List<IncomeTypeStub> stubs) {
-        return converter.to(stubs);
-    }
+    // /**
+    // * @param stubs
+    // * @return
+    // * @see
+    // hu.restoffice.transaction.converter.DefaultConverterService#to(java.util.List)
+    // */
+    // private List<IncomeType> to(final List<IncomeTypeStub> stubs) {
+    // return converter.to(stubs);
+    // }
 
 }

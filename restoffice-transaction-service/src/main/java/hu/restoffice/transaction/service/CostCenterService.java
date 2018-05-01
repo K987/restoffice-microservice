@@ -6,7 +6,7 @@ import hu.restoffice.transaction.error.ServiceException;
 /**
  *
  */
-public interface CostCenterService extends CrudService<CostCenter> {
+public interface CostCenterService extends CRUDService<CostCenter> {
 
     CostCenter getDefault() throws ServiceException;
 

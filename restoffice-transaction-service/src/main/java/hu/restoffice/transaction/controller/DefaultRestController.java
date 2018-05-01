@@ -17,8 +17,6 @@ public interface DefaultRestController<T> {
 
     ResponseEntity<List<T>> findAll(Boolean technical) throws ServiceException;
 
-    ResponseEntity<T> findByName(String name) throws ServiceException;
-
     ResponseEntity<T> getById(Long id) throws ServiceException;
 
     ResponseEntity<T> deleteById(Long id) throws ServiceException;

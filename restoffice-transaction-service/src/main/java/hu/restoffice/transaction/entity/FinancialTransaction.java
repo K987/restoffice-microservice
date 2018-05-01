@@ -60,7 +60,7 @@ public abstract class FinancialTransaction {
     @Embedded
     private AccountingPeriod accPeriod;
 
-    private Date lastModifiedAt;
+    // private Date lastModifiedAt;
 
     // @ManyToOne(fetch = FetchType.LAZY)
     // private User lastModifiedBy;
@@ -221,20 +221,20 @@ public abstract class FinancialTransaction {
         this.accPeriod = accPeriod;
     }
 
-    /**
-     * @return the lastModifiedAt
-     */
-    public Date getLastModifiedAt() {
-        return lastModifiedAt;
-    }
-
-    /**
-     * @param lastModifiedAt
-     *            the lastModifiedAt to set
-     */
-    public void setLastModifiedAt(final Date lastModifiedAt) {
-        this.lastModifiedAt = lastModifiedAt;
-    }
+    // /**
+    // * @return the lastModifiedAt
+    // */
+    // public Date getLastModifiedAt() {
+    // return lastModifiedAt;
+    // }
+    //
+    // /**
+    // * @param lastModifiedAt
+    // * the lastModifiedAt to set
+    // */
+    // public void setLastModifiedAt(final Date lastModifiedAt) {
+    // this.lastModifiedAt = lastModifiedAt;
+    // }
 
     // /**
     // * @return the lastModifiedBy

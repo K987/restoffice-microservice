@@ -8,7 +8,7 @@ import hu.restoffice.transaction.error.ServiceException;
 /**
  *
  */
-public interface IncomeTypeService extends CrudService<IncomeType> {
+public interface IncomeTypeService extends CRUDService<IncomeType> {
 
     IncomeType findByName(String name) throws ServiceException;
 

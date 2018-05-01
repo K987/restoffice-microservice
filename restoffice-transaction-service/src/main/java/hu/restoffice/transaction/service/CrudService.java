@@ -7,7 +7,7 @@ import hu.restoffice.transaction.error.ServiceException;
 /**
  *
  */
-public interface CrudService<T> {
+public interface CRUDService<T> {
 
     T add(final T entity) throws ServiceException;
 
