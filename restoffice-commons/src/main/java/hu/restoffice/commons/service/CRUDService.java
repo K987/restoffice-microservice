@@ -1,6 +1,8 @@
-package hu.restoffice.commons;
+package hu.restoffice.commons.service;
 
 import java.util.List;
+
+import hu.restoffice.commons.error.ServiceException;
 
 /**
  *

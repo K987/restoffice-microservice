@@ -7,7 +7,6 @@ import hu.restoffice.commons.service.DefaultConverterService;
 /**
  *
  */
-public interface RegisterCloseConverterService extends DefaultConverterService<RegisterClose, RegisterCloseStub> {
-
+public interface RegisterCloseConverter extends DefaultConverterService<RegisterClose, RegisterCloseStub> {
 
 }

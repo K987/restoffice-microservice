@@ -1,4 +1,4 @@
-package hu.restoffice.commons;
+package hu.restoffice.commons.service;
 
 import java.util.List;
 
@@ -7,7 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import hu.restoffice.commons.ServiceException.Type;
+import hu.restoffice.commons.error.ServiceException;
+import hu.restoffice.commons.error.ServiceException.Type;
 
 /**
  *

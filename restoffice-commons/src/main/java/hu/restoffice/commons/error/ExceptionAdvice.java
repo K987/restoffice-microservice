@@ -1,4 +1,4 @@
-package hu.restoffice.commons;
+package hu.restoffice.commons.error;
 
 import java.time.LocalDateTime;
 

@@ -2,8 +2,7 @@ package hu.restoffice.cashregister.converter;
 
 import hu.restoffice.cashregister.domain.RegisterStub;
 import hu.restoffice.cashregister.entity.Register;
-import hu.restoffice.commons.DefaultConverterService;
-
+import hu.restoffice.commons.service.DefaultConverterService;
 /**
  *
  */

@@ -1,16 +1,25 @@
-package hu.restoffice.commons;
+package hu.restoffice.commons.web;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
+
+import hu.restoffice.commons.entity.Identity;
+import hu.restoffice.commons.error.ServiceException;
+import hu.restoffice.commons.error.ServiceException.Type;
+import hu.restoffice.commons.service.CRUDService;
+import hu.restoffice.commons.service.DefaultConverterService;
 
 /**
  *
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public abstract class DefaultController {
+public class DefaultController {
 
     private CRUDService service;
-
     private DefaultConverterService converter;
+
+    private static final Logger log = LogManager.getLogger();
 
     /**
      * @param converter
@@ -31,8 +40,10 @@ public abstract class DefaultController {
     }
 
     public ResponseEntity<?> addResource(final Object stub) throws ServiceException {
-        Object id = service.add(converter.to(stub));
-        return ResponseEntity.created(ControllerUtils.createPathTo(getId(id))).build();
+        Object entity = service.add(converter.to(stub));
+        Long id = getId(entity);
+        return ResponseEntity.created(ControllerUtils.createPathTo(id)).build();
+
     }
 
     public ResponseEntity<?> updateResource(final Long id, final Object stub) throws ServiceException {
@@ -44,8 +55,18 @@ public abstract class DefaultController {
     }
 
     /**
-     * @param id
+     * @param entity
      * @return
+     * @throws ServiceException
      */
-    protected abstract Long getId(Object id);
+    private Long getId(final Object entity) throws ServiceException {
+        if (entity instanceof Identity)
+            return ((Identity) entity).getId();
+        else {
+            log.error("The entity does not iplement Identity interface... cant get id" + entity.getClass());
+            throw new ServiceException(Type.CANT_GET_ID, "the object may exists but can't get identity", entity);
+        }
+    }
+
+
 }

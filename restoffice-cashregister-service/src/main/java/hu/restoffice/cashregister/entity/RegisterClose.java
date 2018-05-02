@@ -15,20 +15,21 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import hu.restoffice.commons.entity.Identity;
+
 /**
  *
  */
 @Entity
 @Table(name = "register_closes")
-public class RegisterClose implements Serializable {
+public class RegisterClose implements Serializable, Identity {
 
     private static final long serialVersionUID = -5780679899641241491L;
 
     @Id
     @Column(name = "register_close_id")
-    @SequenceGenerator(name = "REGISTER_CLOSES_REGISTER_CLOSE_ID_GENERATOR", sequenceName = "REGISTER_CLOSES_REGISTER_CLOSE_ID_SEQ", allocationSize = 1)
+    @SequenceGenerator(name = "REGISTER_CLOSES_REGISTER_CLOSE_ID_GENERATOR", sequenceName = "REGISTER_CLOSES_REGISTER_CLOSE_ID_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "REGISTER_CLOSES_REGISTER_CLOSE_ID_GENERATOR")
-
     private Long id;
 
     @Column(name = "register_close_no", unique = true, nullable = false)
@@ -48,6 +49,7 @@ public class RegisterClose implements Serializable {
     public RegisterClose() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -60,11 +62,11 @@ public class RegisterClose implements Serializable {
         this.closeNo = closeNo;
     }
 
-    public BigDecimal getloseAmt() {
+    public BigDecimal getClosingAmount() {
         return closingAmount;
     }
 
-    public void setCloseAmt(final BigDecimal registerCloseAmt) {
+    public void setClosingAmount(final BigDecimal registerCloseAmt) {
         closingAmount = registerCloseAmt;
     }
 

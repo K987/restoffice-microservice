@@ -14,13 +14,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import hu.restoffice.cashregister.domain.RegisterType;
+import hu.restoffice.commons.entity.Identity;
 
 /**
  *
  */
 @Entity
 @Table(name = "registers")
-public class Register implements Serializable {
+public class Register implements Serializable, Identity {
 
     private static final long serialVersionUID = 7776161190060164098L;
 
@@ -47,6 +48,7 @@ public class Register implements Serializable {
     public Register() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }

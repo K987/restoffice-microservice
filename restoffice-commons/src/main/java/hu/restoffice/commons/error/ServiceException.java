@@ -1,4 +1,4 @@
-package hu.restoffice.commons;
+package hu.restoffice.commons.error;
 
 import java.util.Optional;
 
@@ -9,7 +9,7 @@ public class ServiceException extends Exception {
 
     public static enum Type {
         ALREADY_EXISTS("The entity alredy exists"), NOT_EXISTS("The does not exists"), UNKNOWN(
-                "Unknown type of exception");
+                "Unknown type of exception"), CANT_GET_ID("entity may exists, but can't find id");
 
         private String description;
 

@@ -2,6 +2,7 @@ package hu.restoffice.cashregister.repository;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,6 @@ public interface RegisterCloseRepository extends JpaRepository<RegisterClose, Lo
 
     @Query("select r from RegisterClose r where (r.id, r.closeNo) in (select r1.id, max(r1.closeNo) from RegisterClose r1 group by r1.id )")
     List<RegisterClose> findLastCloses();
+
+    Optional<RegisterClose> findByCloseNoAndRegister_RegistrationNo(Long closeNo, String registrationNo);
 }

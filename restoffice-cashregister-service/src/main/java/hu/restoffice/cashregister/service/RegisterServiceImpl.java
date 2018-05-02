@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import hu.restoffice.cashregister.domain.RegisterType;
 import hu.restoffice.cashregister.entity.Register;
 import hu.restoffice.cashregister.repository.RegisterRepository;
-import hu.restoffice.commons.AbstractCRUDService;
+import hu.restoffice.commons.error.ServiceException;
+import hu.restoffice.commons.error.ServiceException.Type;
+import hu.restoffice.commons.service.AbstractCRUDService;
 
 /**
  *
@@ -44,6 +46,19 @@ implements RegisterService {
             old.setRegistrationNo(regNo);
         }
 
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.cashregister.service.RegisterService#findByRegistrationNo(java.
+     * lang.String)
+     */
+    @Override
+    public Register findByRegistrationNo(final String regNo) throws ServiceException {
+        return repo.findByRegistrationNoIgnoreCase(regNo)
+                .orElseThrow(() -> new ServiceException(Type.NOT_EXISTS, regNo));
     }
 
 }

@@ -1,4 +1,4 @@
-package hu.restoffice.commons;
+package hu.restoffice.commons.web;
 
 //
 import org.springframework.context.annotation.Bean;

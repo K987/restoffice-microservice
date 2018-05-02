@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import hu.restoffice.cashregister.domain.RegisterCloseStub;
 import hu.restoffice.cashregister.domain.RegisterStub;
@@ -16,7 +16,7 @@ import hu.restoffice.cashregister.entity.RegisterClose;
 /**
  *
  */
-@Service
+@Component
 public class RegisterConverterServiceImpl implements RegisterConverterService {
 
     @Autowired

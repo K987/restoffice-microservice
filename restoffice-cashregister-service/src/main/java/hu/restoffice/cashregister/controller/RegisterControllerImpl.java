@@ -15,27 +15,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.restoffice.cashregister.domain.RegisterStub;
-import hu.restoffice.commons.DefaultController;
-import hu.restoffice.commons.ServiceException;
+import hu.restoffice.commons.error.ServiceException;
+import hu.restoffice.commons.web.DefaultController;
 
 /**
  *
  */
 @RestController
 @RequestMapping(path = "/register", produces = MediaType.APPLICATION_JSON)
-public class RegisterRestController {
+public class RegisterControllerImpl {
 
     @Resource
-    private DefaultController registerControllerDefault;
+    private DefaultController registerDefaultController;
 
     /**
      * @return
      * @throws ServiceException
+     * @throws hu.restoffice.commons.ServiceException
      * @see hu.restoffice.commons.DefaultController#findallResource()
      */
     @GetMapping
     public ResponseEntity<?> findallResource() throws ServiceException {
-        return registerControllerDefault.findallResource();
+        return registerDefaultController.findallResource();
     }
 
     /**
@@ -47,18 +48,17 @@ public class RegisterRestController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findResourceById(@PathVariable("id") @Digits(fraction = 0, integer = 10) final Long id)
             throws ServiceException {
-        return registerControllerDefault.findResourceById(id);
+        return registerDefaultController.findResourceById(id);
     }
 
     /**
-     * @param stub
      * @return
      * @throws ServiceException
      * @see hu.restoffice.commons.DefaultController#addResource(java.lang.Object)
      */
     @PostMapping(consumes = MediaType.APPLICATION_JSON)
     public ResponseEntity<?> addResource(final @RequestBody @Validated RegisterStub stub) throws ServiceException {
-        return registerControllerDefault.addResource(stub);
+        return registerDefaultController.addResource(stub);
     }
 
     /**
@@ -72,7 +72,7 @@ public class RegisterRestController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON, path = "/{id}")
     public ResponseEntity<?> updateResource(@PathVariable("id") @Digits(fraction = 0, integer = 10) final Long id,
             @RequestBody @Validated final RegisterStub stub) throws ServiceException {
-        return registerControllerDefault.updateResource(id, stub);
+        return registerDefaultController.updateResource(id, stub);
     }
 
     /**
@@ -84,7 +84,7 @@ public class RegisterRestController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteResource(@PathVariable("id") @Digits(fraction = 0, integer = 10) final Long id)
             throws ServiceException {
-        return registerControllerDefault.deleteResource(id);
+        return registerDefaultController.deleteResource(id);
     }
 
 }

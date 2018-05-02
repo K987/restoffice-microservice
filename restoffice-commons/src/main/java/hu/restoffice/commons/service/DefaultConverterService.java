@@ -1,4 +1,4 @@
-package hu.restoffice.commons;
+package hu.restoffice.commons.service;
 
 import java.util.ArrayList;
 import java.util.List;

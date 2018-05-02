@@ -2,7 +2,6 @@ package hu.restoffice.cashregister.domain;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -12,11 +11,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RegisterStub {
 
+    @JsonProperty
     private Long id;
+    @JsonProperty
     private String registrationNo;
+    @JsonProperty
     private RegisterType registerType;
+    @JsonProperty
     private List<RegisterCloseStub> registerClose;
 
+    public RegisterStub() {
+
+    }
 
     /**
      * @param id
@@ -24,16 +30,15 @@ public class RegisterStub {
      * @param registerType
      * @param registerClose
      */
-    @JsonCreator
-    public RegisterStub(@JsonProperty("id") final Long id, @JsonProperty("registrationNo") final String registrationNo,
-            @JsonProperty("registerType") final RegisterType registerType,
-            @JsonProperty("registerClose") final List<RegisterCloseStub> registerClose) {
+    public RegisterStub(final Long id, final String registrationNo, final RegisterType registerType,
+            final List<RegisterCloseStub> registerClose) {
         super();
         this.id = id;
         this.registrationNo = registrationNo;
         this.registerType = registerType;
         this.registerClose = registerClose;
     }
+
 
     /**
      * @return the id
