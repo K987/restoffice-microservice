@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import hu.restoffice.transaction.controller.util.ControllerUtils;
+import hu.restoffice.commons.ControllerUtils;
+import hu.restoffice.commons.ServiceException;
 import hu.restoffice.transaction.converter.ExpenseConverterService;
 import hu.restoffice.transaction.domain.ExpenseStub;
 import hu.restoffice.transaction.entity.Expense;
-import hu.restoffice.transaction.error.ServiceException;
 import hu.restoffice.transaction.service.ExpenseService;
 
 /**

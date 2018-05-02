@@ -2,8 +2,9 @@ package hu.restoffice.transaction.service;
 
 import java.util.List;
 
+import hu.restoffice.commons.CRUDService;
+import hu.restoffice.commons.ServiceException;
 import hu.restoffice.transaction.entity.Income;
-import hu.restoffice.transaction.error.ServiceException;
 
 /**
  *

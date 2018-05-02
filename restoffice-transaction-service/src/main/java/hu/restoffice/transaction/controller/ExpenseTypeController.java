@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import hu.restoffice.transaction.controller.util.ControllerUtils;
+import hu.restoffice.commons.ControllerUtils;
+import hu.restoffice.commons.ServiceException;
 import hu.restoffice.transaction.converter.ExpenseTypeConverterService;
 import hu.restoffice.transaction.domain.ExpenseTypeStub;
 import hu.restoffice.transaction.entity.ExpenseType;
-import hu.restoffice.transaction.error.ServiceException;
 import hu.restoffice.transaction.service.ExpenseTypeService;
 
 /**

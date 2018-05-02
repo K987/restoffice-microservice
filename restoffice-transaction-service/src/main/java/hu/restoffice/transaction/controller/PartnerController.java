@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import hu.restoffice.commons.ServiceException;
 import hu.restoffice.transaction.domain.PartnerStub;
 import hu.restoffice.transaction.entity.PartnerContact;
-import hu.restoffice.transaction.error.ServiceException;
 
 /**
  *

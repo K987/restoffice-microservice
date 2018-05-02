@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 
-import hu.restoffice.transaction.error.ServiceException;
+import hu.restoffice.commons.ServiceException;
 
 /**
  *

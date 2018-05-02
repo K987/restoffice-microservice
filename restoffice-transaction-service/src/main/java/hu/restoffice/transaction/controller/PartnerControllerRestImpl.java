@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import hu.restoffice.transaction.controller.util.ControllerUtils;
+import hu.restoffice.commons.ControllerUtils;
+import hu.restoffice.commons.ServiceException;
 import hu.restoffice.transaction.converter.PartnerConverterService;
 import hu.restoffice.transaction.domain.PartnerStub;
 import hu.restoffice.transaction.entity.Partner;
 import hu.restoffice.transaction.entity.PartnerContact;
-import hu.restoffice.transaction.error.ServiceException;
 import hu.restoffice.transaction.service.PartnerService;
 
 /**
@@ -158,7 +158,7 @@ public class PartnerControllerRestImpl implements PartnerController {
     /**
      * @param entity
      * @return
-     * @see hu.restoffice.transaction.converter.DefaultConverterService#from(java.lang.Object)
+     * @see hu.restoffice.commons.DefaultConverterService#from(java.lang.Object)
      */
     public PartnerStub from(final Partner entity) {
         return converter.from(entity);
@@ -167,7 +167,7 @@ public class PartnerControllerRestImpl implements PartnerController {
     /**
      * @param stub
      * @return
-     * @see hu.restoffice.transaction.converter.DefaultConverterService#to(java.lang.Object)
+     * @see hu.restoffice.commons.DefaultConverterService#to(java.lang.Object)
      */
     public Partner to(final PartnerStub stub) {
         return converter.to(stub);
@@ -176,7 +176,7 @@ public class PartnerControllerRestImpl implements PartnerController {
     /**
      * @param entity
      * @return
-     * @see hu.restoffice.transaction.converter.DefaultConverterService#from(java.util.List)
+     * @see hu.restoffice.commons.DefaultConverterService#from(java.util.List)
      */
     public List<PartnerStub> from(final List<Partner> entity) {
         return converter.from(entity);
@@ -185,7 +185,7 @@ public class PartnerControllerRestImpl implements PartnerController {
     /**
      * @param stubs
      * @return
-     * @see hu.restoffice.transaction.converter.DefaultConverterService#to(java.util.List)
+     * @see hu.restoffice.commons.DefaultConverterService#to(java.util.List)
      */
     public List<Partner> to(final List<PartnerStub> stubs) {
         return converter.to(stubs);

@@ -4,10 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import hu.restoffice.commons.AbstractCRUDService;
+import hu.restoffice.commons.ServiceException;
+import hu.restoffice.commons.ServiceException.Type;
 import hu.restoffice.transaction.domain.IncomeTypeRepository;
 import hu.restoffice.transaction.entity.IncomeType;
-import hu.restoffice.transaction.error.ServiceException;
-import hu.restoffice.transaction.error.ServiceException.Type;
 
 /**
  *

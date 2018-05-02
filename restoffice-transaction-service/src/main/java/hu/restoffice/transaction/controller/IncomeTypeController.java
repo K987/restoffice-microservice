@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import hu.restoffice.transaction.controller.util.ControllerUtils;
+import hu.restoffice.commons.ControllerUtils;
+import hu.restoffice.commons.ServiceException;
 import hu.restoffice.transaction.converter.IncomeTypeConverterService;
 import hu.restoffice.transaction.domain.IncomeTypeStub;
 import hu.restoffice.transaction.entity.IncomeType;
-import hu.restoffice.transaction.error.ServiceException;
 import hu.restoffice.transaction.service.IncomeTypeService;
 
 /**
@@ -79,7 +79,7 @@ public class IncomeTypeController {
     /**
      * @param entity
      * @return
-     * @see hu.restoffice.transaction.converter.DefaultConverterService#from(java.lang.Object)
+     * @see hu.restoffice.commons.DefaultConverterService#from(java.lang.Object)
      */
     private IncomeTypeStub from(final IncomeType entity) {
         return converter.from(entity);
@@ -88,7 +88,7 @@ public class IncomeTypeController {
     /**
      * @param stub
      * @return
-     * @see hu.restoffice.transaction.converter.DefaultConverterService#to(java.lang.Object)
+     * @see hu.restoffice.commons.DefaultConverterService#to(java.lang.Object)
      */
     private IncomeType to(final IncomeTypeStub stub) {
         return converter.to(stub);
@@ -97,7 +97,7 @@ public class IncomeTypeController {
     /**
      * @param entity
      * @return
-     * @see hu.restoffice.transaction.converter.DefaultConverterService#from(java.util.List)
+     * @see hu.restoffice.commons.DefaultConverterService#from(java.util.List)
      */
     private List<IncomeTypeStub> from(final List<IncomeType> entity) {
         return converter.from(entity);
