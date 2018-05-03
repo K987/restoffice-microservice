@@ -1,5 +1,7 @@
 package hu.restoffice.cashregister.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import hu.restoffice.cashregister.domain.RegisterType;
@@ -16,6 +18,7 @@ import hu.restoffice.commons.service.AbstractCRUDService;
 public class RegisterServiceImpl extends AbstractCRUDService<Register, RegisterRepository>
 implements RegisterService {
 
+    private static final Logger log = LogManager.getLogger();
 
     /*
      * (non-Javadoc)

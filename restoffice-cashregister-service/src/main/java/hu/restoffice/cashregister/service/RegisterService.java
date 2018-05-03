@@ -10,4 +10,5 @@ import hu.restoffice.commons.service.CRUDService;
 public interface RegisterService extends CRUDService<Register> {
 
     Register findByRegistrationNo(String regNo) throws ServiceException;
+
 }

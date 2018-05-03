@@ -1,5 +1,7 @@
 package hu.restoffice.commons.web;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
@@ -31,11 +33,11 @@ public class DefaultController {
         this.service = service;
     }
 
-    public ResponseEntity<?> findallResource() throws ServiceException {
+    public ResponseEntity<List<?>> findallResource() throws ServiceException {
         return ResponseEntity.ok(converter.from(service.findAll()));
     }
 
-    public ResponseEntity<?> findResourceById(final Long id) throws ServiceException {
+    public ResponseEntity<Object> findResourceById(final Long id) throws ServiceException {
         return ResponseEntity.ok(converter.from(service.findById(id)));
     }
 
@@ -46,11 +48,11 @@ public class DefaultController {
 
     }
 
-    public ResponseEntity<?> updateResource(final Long id, final Object stub) throws ServiceException {
+    public ResponseEntity<Object> updateResource(final Long id, final Object stub) throws ServiceException {
         return ResponseEntity.ok(converter.from(service.update(id, converter.to(stub))));
     }
 
-    public ResponseEntity<?> deleteResource(final Long id) throws ServiceException {
+    public ResponseEntity<Object> deleteResource(final Long id) throws ServiceException {
         return ResponseEntity.ok(converter.from(service.delete(id)));
     }
 
@@ -68,5 +70,17 @@ public class DefaultController {
         }
     }
 
+    /**
+     * @return the service
+     */
+    public CRUDService getService() {
+        return service;
+    }
 
+    /**
+     * @return the converter
+     */
+    public DefaultConverterService getConverter() {
+        return converter;
+    }
 }

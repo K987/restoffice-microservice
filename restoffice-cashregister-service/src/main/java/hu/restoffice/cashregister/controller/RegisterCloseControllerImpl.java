@@ -1,9 +1,13 @@
 package hu.restoffice.cashregister.controller;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.Digits;
 import javax.ws.rs.core.MediaType;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityLinks;
+import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.restoffice.cashregister.domain.RegisterCloseStub;
+import hu.restoffice.cashregister.domain.RegisterStub;
 import hu.restoffice.commons.error.ServiceException;
 import hu.restoffice.commons.web.DefaultController;
 
@@ -19,11 +24,15 @@ import hu.restoffice.commons.web.DefaultController;
  *
  */
 @RestController
+@ExposesResourceFor(RegisterCloseStub.class)
 @RequestMapping(path = "/register-close", produces = MediaType.APPLICATION_JSON)
-public class RgisterCloseControllerImpl implements RegisterCloseController {
+public class RegisterCloseControllerImpl implements RegisterCloseController {
 
     @Resource
     private DefaultController registerCloseDefaultController;
+
+    @Autowired
+    EntityLinks entityLinks;
 
     /*
      * (non-Javadoc)
@@ -32,9 +41,12 @@ public class RgisterCloseControllerImpl implements RegisterCloseController {
      * hu.restoffice.cashregister.controller.DefaultController#findallResource()
      */
     @Override
-    public ResponseEntity<?> findallResource() throws ServiceException {
-        // TODO Auto-generated method stub
-        return registerCloseDefaultController.findallResource();
+    public ResponseEntity<List<?>> findallResource() throws ServiceException {
+        ResponseEntity<List<?>> resp = registerCloseDefaultController.findallResource();
+        List<RegisterCloseStub> stubs = (List<RegisterCloseStub>) resp.getBody();
+        for (RegisterCloseStub body : stubs)
+            body.add(entityLinks.linkToSingleResource(RegisterStub.class, body.getRegisterId()).withRel("register"));
+        return resp;
     }
 
     /*
@@ -47,8 +59,10 @@ public class RgisterCloseControllerImpl implements RegisterCloseController {
     @Override
     public ResponseEntity<?> findResourceById(final @PathVariable("id") @Digits(fraction = 0, integer = 10) Long id)
             throws ServiceException {
-        // TODO Auto-generated method stub
-        return registerCloseDefaultController.findResourceById(id);
+        ResponseEntity<Object> resp = registerCloseDefaultController.findResourceById(id);
+        RegisterCloseStub stub = (RegisterCloseStub) resp.getBody();
+        stub.add(entityLinks.linkToSingleResource(RegisterStub.class, stub.getRegisterId()).withRel("register"));
+        return resp;
     }
 
     /*

@@ -25,9 +25,11 @@ public class RegisterCloseConverterServiceImpl implements RegisterCloseConverter
      */
     @Override
     public RegisterCloseStub from(final RegisterClose entity) {
-        String registerNo = Optional.ofNullable(entity.getRegister().getRegistrationNo()).orElse("null");
+        Register r = entity.getRegister();
+        String registerNo = r != null ? r.getRegistrationNo() : null;
+        Long regId = r != null ? r.getId() : null;
         return new RegisterCloseStub(entity.getId(), entity.getCloseNo(),
-                entity.getClosingAmount(), initLocalDate(entity.getCloseDate()), registerNo);
+                entity.getClosingAmount(), initLocalDate(entity.getCloseDate()), registerNo, regId);
     }
 
     /*

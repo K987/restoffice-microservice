@@ -4,15 +4,15 @@ spring:
   profiles:
     active:
     - development
-aspect:
-  logging:
-    component:
-      enabled: true
+  jpa:
+    open-in-view: false
 ---
 server:
   port: 8080
 spring:
   profiles: development
+  jpa:
+    show-sql: true
   cloud:
     config:
       enabled: false
@@ -21,6 +21,10 @@ spring:
 eureka:
   client:
     enabled: false
+aspect:
+  logging:
+    component:
+      enabled: true
 ---
 server:
   port: 0
@@ -32,6 +36,8 @@ spring:
         enabled: true
         service-id: restoffice-config-server
       fail-fast: true
+
 eureka:
   client:
     fetch-registry: true
+    

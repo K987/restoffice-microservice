@@ -3,21 +3,24 @@ package hu.restoffice.cashregister.converter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import hu.restoffice.cashregister.domain.RegisterCloseStub;
 import hu.restoffice.cashregister.domain.RegisterStub;
 import hu.restoffice.cashregister.entity.Register;
-import hu.restoffice.cashregister.entity.RegisterClose;
 
 /**
  *
  */
 @Component
 public class RegisterConverterServiceImpl implements RegisterConverterService {
+
+    private static final Logger log = LogManager.getLogger();
 
     @Autowired
     private RegisterCloseConverterService registerCloseConverter;
@@ -28,7 +31,7 @@ public class RegisterConverterServiceImpl implements RegisterConverterService {
     public RegisterStub from(final Register entity) {
 
         return new RegisterStub(entity.getId(), entity.getRegistrationNo(), entity.getRegisterType(),
-                fromRegisterClose(entity.getRegisterCloses()));
+                fromRegisterClose(entity));
     }
 
     /*
@@ -49,11 +52,14 @@ public class RegisterConverterServiceImpl implements RegisterConverterService {
      * @param registerCloses
      * @return
      */
-    private List<RegisterCloseStub> fromRegisterClose(final Set<RegisterClose> registerCloses) {
-        if (registerCloses == null)
+    private List<RegisterCloseStub> fromRegisterClose(final Register register) {
+        if (!Hibernate.isInitialized(register.getRegisterCloses()) || register.getRegisterCloses() == null) {
+            log.info("i am not inited");
             return new ArrayList<>();
+        }
         else {
-            return registerCloseConverter.from(new ArrayList<>(registerCloses));
+            log.info("i am inited");
+            return registerCloseConverter.from(new ArrayList<>(register.getRegisterCloses()));
         }
 
     }

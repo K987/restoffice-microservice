@@ -7,10 +7,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import hu.restoffice.cashregister.domain.RegisterType;
@@ -25,12 +27,10 @@ public class Register implements Serializable, Identity {
 
     private static final long serialVersionUID = 7776161190060164098L;
 
+    public static final String NO_DETAILS = "Register.noDetails";
     @Id
-    // @SequenceGenerator(name = "REGISTERS_REGISTER_ID_GENERATOR", sequenceName =
-    // "REGISTERS_REGISTER_ID_SEQ")
-    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-    // "REGISTERS_REGISTER_ID_GENERATOR")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "REGISTERS_REGISTER_ID_GENERATOR", sequenceName = "REGISTERS_REGISTER_ID_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "REGISTERS_REGISTER_ID_GENERATOR")
     @Column(name = "register_id")
     private Long id;
 
@@ -42,7 +42,7 @@ public class Register implements Serializable, Identity {
     private RegisterType registerType;
 
     // bi-directional many-to-one association to RegisterClos
-    @OneToMany(mappedBy = "register", targetEntity = RegisterClose.class)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "register")
     private Set<RegisterClose> registerCloses;
 
     public Register() {

@@ -86,5 +86,16 @@ public class RegisterClose implements Serializable, Identity {
         this.register = register;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "RegisterClose [id=" + id + ", closeNo=" + closeNo + ", closingAmount=" + closingAmount + ", closeDate="
+                + closeDate + ", register=" + register + "]";
+    }
+
 }
 

@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.hateoas.config.EnableEntityLinks;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import hu.restoffice.cashregister.converter.RegisterCloseConverterService;
@@ -14,6 +15,7 @@ import hu.restoffice.commons.web.DefaultController;
 
 @ComponentScan("hu.restoffice")
 @SpringBootApplication
+@EnableEntityLinks
 public class RestofficeCashregisterServiceApplication {
 
     public static void main(final String[] args) {

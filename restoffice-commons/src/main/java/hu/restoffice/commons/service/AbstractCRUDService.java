@@ -32,6 +32,7 @@ public abstract class AbstractCRUDService<T, R extends JpaRepository<T, Long>> {
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<T> findAll() throws ServiceException{
         try {
             return repo.findAll();

@@ -35,6 +35,7 @@ configurations {
 dependencies {
     compile files('../restoffice-commons/build/libs/restoffice-commons-0.0.1-SNAPSHOT.jar')
     compile('org.springframework.boot:spring-boot-starter-log4j2')
+    compile("org.springframework.boot:spring-boot-starter-hateoas")
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-web')

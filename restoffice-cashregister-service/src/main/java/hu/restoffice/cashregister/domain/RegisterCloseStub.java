@@ -3,12 +3,19 @@ package hu.restoffice.cashregister.domain;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.ResourceSupport;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  *
  */
-public class RegisterCloseStub {
+@JsonInclude(Include.NON_EMPTY)
+public class RegisterCloseStub extends ResourceSupport {
 
     @JsonProperty
     private Long id;
@@ -20,6 +27,8 @@ public class RegisterCloseStub {
     private LocalDate closeDate;
     @JsonProperty
     private String registerRegistrationNo;
+    @JsonIgnore
+    private Long registerId;
 
     public RegisterCloseStub() {
     }
@@ -32,19 +41,31 @@ public class RegisterCloseStub {
      * @param register
      */
     public RegisterCloseStub(final Long id, final Long closeNo, final BigDecimal closingAmount,
-            final LocalDate closeDate, final String registerRegistrationNo) {
+            final LocalDate closeDate, final String registerRegistrationNo, final Long registerId) {
         super();
         this.id = id;
         this.closeNo = closeNo;
         this.closingAmount = closingAmount;
         this.closeDate = closeDate;
         this.registerRegistrationNo = registerRegistrationNo;
+        this.registerId = registerId;
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.springframework.hateoas.ResourceSupport#getId()
+     */
+    @Override
+    public Link getId() {
+        // TODO Auto-generated method stub
+        return super.getId();
+    }
     /**
      * @return the id
      */
-    public Long getId() {
+    @JsonIgnore
+    public Long getCloseId() {
         return id;
     }
 
@@ -68,11 +89,16 @@ public class RegisterCloseStub {
     public LocalDate getCloseDate() {
         return closeDate;
     }
-    
+
     /**
      * @return the registerRegistrationNo
      */
     public String getRegisterRegistrationNo() {
         return registerRegistrationNo;
     }
+
+    public Long getRegisterId() {
+        return registerId;
+    }
+
 }

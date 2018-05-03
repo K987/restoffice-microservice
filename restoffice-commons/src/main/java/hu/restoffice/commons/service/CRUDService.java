@@ -7,6 +7,7 @@ import hu.restoffice.commons.error.ServiceException;
 /**
  *
  */
+// @Transactional(propagation = Propagation.REQUIRES_NEW)
 public interface CRUDService<T> {
 
     T add(final T entity) throws ServiceException;
