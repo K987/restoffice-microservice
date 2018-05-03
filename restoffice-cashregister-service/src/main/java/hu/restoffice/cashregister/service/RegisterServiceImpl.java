@@ -1,7 +1,5 @@
 package hu.restoffice.cashregister.service;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import hu.restoffice.cashregister.domain.RegisterType;
@@ -15,10 +13,7 @@ import hu.restoffice.commons.service.AbstractCRUDService;
  *
  */
 @Service
-public class RegisterServiceImpl extends AbstractCRUDService<Register, RegisterRepository>
-implements RegisterService {
-
-    private static final Logger log = LogManager.getLogger();
+public class RegisterServiceImpl extends AbstractCRUDService<Register, RegisterRepository> implements RegisterService {
 
     /*
      * (non-Javadoc)
@@ -27,7 +22,7 @@ implements RegisterService {
      * hu.restoffice.commons.AbstractCRUDService#checkExistence(java.lang.Object)
      */
     @Override
-    protected boolean checkExistence(final Register entity) {
+    protected boolean checkExistence(final Register entity) throws ServiceException {
         return repo.findByRegistrationNoIgnoreCase(entity.getRegistrationNo()).isPresent();
     }
 
@@ -62,6 +57,11 @@ implements RegisterService {
     public Register findByRegistrationNo(final String regNo) throws ServiceException {
         return repo.findByRegistrationNoIgnoreCase(regNo)
                 .orElseThrow(() -> new ServiceException(Type.NOT_EXISTS, regNo));
+    }
+
+    @Override
+    protected boolean isDeletable(final Long id) throws ServiceException {
+        return (repo.hasCloses(id) == 0);
     }
 
 }

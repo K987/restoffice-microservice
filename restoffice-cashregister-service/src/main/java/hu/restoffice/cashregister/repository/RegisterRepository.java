@@ -26,4 +26,10 @@ public interface RegisterRepository extends JpaRepository<Register, Long> {
     @Override
     @Query("select r from Register r join fetch r.registerCloses c where r.id = :id")
     Optional<Register> findById(@Param("id") Long id);
+
+    /**
+     * @param id
+     */
+    @Query("select count(r) from Register r where r.id = :id and r.registerCloses is empty")
+    Long hasCloses(@Param("id") Long id);
 }

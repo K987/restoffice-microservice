@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -18,12 +19,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import hu.restoffice.commons.entity.Identity;
+
 /**
  *
  */
 @Entity
 @Table(name = "shifts")
-public class Shift implements Serializable {
+public class Shift implements Serializable, Identity {
 
     private static final long serialVersionUID = 6872015514882085018L;
 
@@ -52,6 +55,12 @@ public class Shift implements Serializable {
     public Shift() {
     }
 
+    @PostLoad
+    protected void setDateAndTime() {
+        startDate = Optional.ofNullable(startDateTime).map(s -> s.toLocalDateTime().toLocalDate()).orElse(null);
+        startTime = Optional.ofNullable(startDateTime).map(s -> s.toLocalDateTime().toLocalTime()).orElse(null);
+    }
+
     public EmployeeShift addEmployeeShift(final EmployeeShift employeeShift) {
         getEmployeeShifts().add(employeeShift);
         employeeShift.setShift(this);
@@ -66,12 +75,7 @@ public class Shift implements Serializable {
         return employeeShift;
     }
 
-    @PostLoad
-    public void setDateAndTime() {
-        startDate = startDateTime.toLocalDateTime().toLocalDate();
-        startTime = startDateTime.toLocalDateTime().toLocalTime();
-    }
-
+    @Override
     public Long getId() {
         return id;
     }
@@ -117,5 +121,15 @@ public class Shift implements Serializable {
         return employeeShifts;
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "Shift [id=" + id + ", duration=" + duration + ", startDateTime=" + startDateTime + ", startDate="
+                + startDate + ", startTime=" + startTime + ", employeeShifts exists=" + (employeeShifts == null) + "]";
+    }
 
 }

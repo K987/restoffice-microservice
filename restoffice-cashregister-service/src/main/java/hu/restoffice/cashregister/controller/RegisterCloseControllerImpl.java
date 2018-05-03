@@ -1,4 +1,6 @@
 package hu.restoffice.cashregister.controller;
+
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,9 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import hu.restoffice.cashregister.converter.RegisterCloseConverterService;
 import hu.restoffice.cashregister.domain.RegisterCloseStub;
 import hu.restoffice.cashregister.domain.RegisterStub;
+import hu.restoffice.cashregister.entity.RegisterClose;
+import hu.restoffice.cashregister.service.RegisterCloseService;
 import hu.restoffice.commons.error.ServiceException;
+import hu.restoffice.commons.error.ServiceException.Type;
 import hu.restoffice.commons.web.DefaultController;
 
 /**
@@ -27,12 +33,20 @@ import hu.restoffice.commons.web.DefaultController;
 @ExposesResourceFor(RegisterCloseStub.class)
 @RequestMapping(path = "/register-close", produces = MediaType.APPLICATION_JSON)
 public class RegisterCloseControllerImpl implements RegisterCloseController {
-
+    // TODO: batch register close
     @Resource
     private DefaultController registerCloseDefaultController;
 
     @Autowired
     EntityLinks entityLinks;
+
+    private RegisterCloseService service() {
+        return (RegisterCloseService) registerCloseDefaultController.getService();
+    }
+
+    private RegisterCloseConverterService converter() {
+        return (RegisterCloseConverterService) registerCloseDefaultController.getConverter();
+    }
 
     /*
      * (non-Javadoc)
@@ -74,7 +88,6 @@ public class RegisterCloseControllerImpl implements RegisterCloseController {
      */
     @Override
     public ResponseEntity<?> addResource(final @RequestBody @Validated RegisterCloseStub stub) throws ServiceException {
-        // TODO Auto-generated method stub
         return registerCloseDefaultController.addResource(stub);
     }
 
@@ -104,5 +117,36 @@ public class RegisterCloseControllerImpl implements RegisterCloseController {
         return registerCloseDefaultController.deleteResource(id);
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see hu.restoffice.cashregister.controller.RegisterCloseController#
+     * findResourceByDate(java.time.LocalDate, java.time.LocalDate)
+     */
+    @Override
+    public ResponseEntity<List<?>> findResourceByDate(final LocalDate from, final LocalDate to)
+            throws ServiceException {
+        List<RegisterClose> rtrn;
+        if (to != null)
+            rtrn = service().getClosesByDate(from);
+        else
+            rtrn = service().getClosesBetweenDate(from, to);
+        if (rtrn == null)
+            throw new ServiceException(Type.NOT_EXISTS, "no closes between " + from + " and " + to);
+        else
+            return ResponseEntity.ok(converter().from(rtrn));
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.cashregister.controller.RegisterCloseController#getLastCloses()
+     */
+    @Override
+    public ResponseEntity<List<?>> getLastCloses() throws ServiceException {
+        // Visszakéne adni azokat a gépeket is amik még sose voltak zárva
+        return ResponseEntity.ok(converter().from(service().getLastCloses()));
+    }
 
 }

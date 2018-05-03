@@ -1,0 +1,1 @@
+insert into employees(employee_id,employee_active,employee_default_hourly_wage,employee_default_position,employee_name) values (1,TRUE,1000,0,'Szél Tamás');

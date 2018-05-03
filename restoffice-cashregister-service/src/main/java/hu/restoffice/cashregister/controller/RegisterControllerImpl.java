@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import hu.restoffice.cashregister.converter.RegisterCloseConverterService;
 import hu.restoffice.cashregister.domain.RegisterStub;
 import hu.restoffice.commons.error.ServiceException;
 import hu.restoffice.commons.web.DefaultController;
@@ -31,9 +30,6 @@ public class RegisterControllerImpl implements RegisterController {
 
     @Resource
     private DefaultController registerDefaultController;
-
-    @Autowired
-    private RegisterCloseConverterService registerCloseConverter;
 
     @Autowired
     EntityLinks entityLinks;

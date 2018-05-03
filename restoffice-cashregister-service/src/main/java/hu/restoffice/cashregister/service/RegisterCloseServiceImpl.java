@@ -2,6 +2,8 @@ package hu.restoffice.cashregister.service;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,7 +53,7 @@ implements RegisterCloseService {
      * hu.restoffice.commons.AbstractCRUDService#checkExistence(java.lang.Object)
      */
     @Override
-    protected boolean checkExistence(final RegisterClose entity) {
+    protected boolean checkExistence(final RegisterClose entity) throws ServiceException {
         return repo
                 .findByCloseNoAndRegister_RegistrationNo(entity.getCloseNo(), entity.getRegister().getRegistrationNo())
                 .isPresent();
@@ -77,6 +79,48 @@ implements RegisterCloseService {
         Register r = entity.getRegister();
         if (r != null)
             old.setRegister(r);
+    }
+
+    /* (non-Javadoc)
+     * @see hu.restoffice.commons.service.AbstractCRUDService#isDeletable(java.lang.Object)
+     */
+    @Override
+    protected boolean isDeletable(final Long id) throws ServiceException {
+        return true;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.cashregister.service.RegisterCloseService#getClosesByDate(java.
+     * time.LocalDate)
+     */
+    @Override
+    public List<RegisterClose> getClosesByDate(final LocalDate day) throws ServiceException {
+        return repo.findByCloseDate(Date.valueOf(day));
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see hu.restoffice.cashregister.service.RegisterCloseService#getLastCloses()
+     */
+    @Override
+    public List<RegisterClose> getLastCloses() throws ServiceException {
+        return repo.findLastCloses();
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.cashregister.service.RegisterCloseService#getClosesBetweenDate(
+     * java.time.LocalDate, java.time.LocalDate)
+     */
+    @Override
+    public List<RegisterClose> getClosesBetweenDate(final LocalDate form, final LocalDate to) throws ServiceException {
+        return repo.findByCloseDateBetween(Date.valueOf(form), Date.valueOf(to));
     }
 
 }

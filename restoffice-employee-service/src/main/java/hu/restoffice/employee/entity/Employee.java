@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import hu.restoffice.commons.entity.Identity;
 import hu.restoffice.employee.domain.JobPosition;
 
 /**
@@ -24,10 +25,10 @@ import hu.restoffice.employee.domain.JobPosition;
  */
 @Entity
 @Table(name = "employees")
-public class Employee implements Serializable {
+public class Employee implements Serializable, Identity {
 
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 5206798093009220029L;
 
     @Id
     @SequenceGenerator(name = "EMPLOYEES_EMPLOYEEID_GENERATOR", sequenceName = "EMPLOYEES_EMPLOYEE_ID_SEQ")
@@ -74,6 +75,7 @@ public class Employee implements Serializable {
         return employeeShift;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -117,4 +119,17 @@ public class Employee implements Serializable {
     public void setEmployeeShifts(final Set<EmployeeShift> employeeShifts) {
         this.employeeShifts = employeeShifts;
     }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "Employee [id=" + id + ", active=" + active + ", defaultHourlyWage=" + defaultHourlyWage
+                + ", defaultPosition=" + defaultPosition + ", name=" + name + ", employeeShifts="
+                + (employeeShifts == null) + "]";
+    }
+
 }

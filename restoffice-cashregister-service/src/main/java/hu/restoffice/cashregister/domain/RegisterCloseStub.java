@@ -58,7 +58,6 @@ public class RegisterCloseStub extends ResourceSupport {
      */
     @Override
     public Link getId() {
-        // TODO Auto-generated method stub
         return super.getId();
     }
     /**

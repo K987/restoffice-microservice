@@ -56,7 +56,8 @@ public abstract class AbstractCRUDService<T, R extends JpaRepository<T, Long>> {
     public T delete(final Long id) throws ServiceException {
         T toDel = this.findById(id);
         try {
-            repo.deleteById(id);
+            if (isDeletable(id))
+                repo.deleteById(id);
         } catch (Exception e) {
             throw new ServiceException(Type.UNKNOWN, "error when deleting entity", id);
         }
@@ -74,11 +75,14 @@ public abstract class AbstractCRUDService<T, R extends JpaRepository<T, Long>> {
      * @param entity
      * @return
      */
-    protected abstract boolean checkExistence(final T entity);
+    protected abstract boolean checkExistence(final T entity) throws ServiceException;
 
     /**
      * @param old
      * @param entity
      */
     protected abstract void updateFields(final T old, final T entity);
+
+    protected abstract boolean isDeletable(final Long id) throws ServiceException;
+
 }

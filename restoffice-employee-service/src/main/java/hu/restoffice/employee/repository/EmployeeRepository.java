@@ -9,4 +9,9 @@ import hu.restoffice.employee.entity.Employee;
  */
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
+    /**
+     * @return
+     */
+    Long countByIdAndEmployeeShifts_ActualEndNotNull(Long id);
+
 }
