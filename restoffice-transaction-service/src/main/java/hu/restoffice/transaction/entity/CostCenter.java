@@ -13,9 +13,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import hu.restoffice.commons.entity.Identity;
+
 @Entity
 @Table(name = "cost_centers")
-public class CostCenter implements Serializable {
+public class CostCenter implements Serializable, Identity {
 
     private static final long serialVersionUID = 7273878052560094915L;
 

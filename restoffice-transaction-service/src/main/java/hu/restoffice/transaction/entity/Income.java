@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import hu.restoffice.commons.entity.Identity;
+
 /**
  *
  */
@@ -39,7 +41,7 @@ import javax.persistence.Table;
         // @AssociationOverride(name = "lastModifiedBy", joinColumns = @JoinColumn(name
         // = "income_last_modified_by", referencedColumnName = "user_id"))
 })
-public class Income extends FinancialTransaction implements Serializable {
+public class Income extends FinancialTransaction implements Serializable, Identity {
 
     private static final long serialVersionUID = 7025564263254038236L;
 
@@ -60,6 +62,7 @@ public class Income extends FinancialTransaction implements Serializable {
     /**
      * @return the id
      */
+    @Override
     public Long getId() {
         return id;
     }

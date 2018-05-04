@@ -13,12 +13,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import hu.restoffice.commons.entity.Identity;
+
 /**
  *
  */
 @Entity
 @Table(name = "expense_types")
-public class ExpenseType implements Serializable {
+public class ExpenseType implements Serializable, Identity {
 
     private static final long serialVersionUID = -7693502259133533204L;
 
@@ -63,6 +65,7 @@ public class ExpenseType implements Serializable {
         return expense;
     }
 
+    @Override
     public Long getId() {
         return id;
     }

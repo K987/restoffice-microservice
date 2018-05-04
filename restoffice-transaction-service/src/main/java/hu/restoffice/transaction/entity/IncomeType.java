@@ -13,12 +13,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import hu.restoffice.commons.entity.Identity;
+
 /**
  *
  */
 @Entity
 @Table(name = "income_types")
-public class IncomeType implements Serializable {
+public class IncomeType implements Serializable, Identity {
 
     private static final long serialVersionUID = -3026418101327410970L;
 
@@ -58,6 +60,7 @@ public class IncomeType implements Serializable {
     /**
      * @return
      */
+    @Override
     public Long getId() {
         return id;
     }

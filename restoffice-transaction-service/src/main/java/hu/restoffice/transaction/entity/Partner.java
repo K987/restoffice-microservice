@@ -14,12 +14,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import hu.restoffice.commons.entity.Identity;
+
 /**
  *
  */
 @Entity
 @Table(name = "partners")
-public class Partner implements Serializable {
+public class Partner implements Serializable, Identity {
 
     private static final long serialVersionUID = -8378660922522209425L;
 
@@ -50,6 +52,7 @@ public class Partner implements Serializable {
     public Partner() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }
