@@ -55,6 +55,7 @@ public class RegisterCloseControllerImpl implements RegisterCloseController {
      * @see
      * hu.restoffice.cashregister.controller.DefaultController#findallResource()
      */
+    @SuppressWarnings("unchecked")
     @Override
     public ResponseEntity<List<?>> findallResource() throws ServiceException {
         ResponseEntity<List<?>> resp = registerCloseDefaultController.findallResource();

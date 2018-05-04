@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hu.restoffice.transaction.domain.ExpenseStub;
@@ -20,12 +19,6 @@ import hu.restoffice.transaction.entity.Partner;
  */
 @Service
 public class ExpenseConverterServiceImpl implements ExpenseConverterService {
-
-    @Autowired
-    private PartnerConverterService partnerConverter;
-
-    @Autowired
-    private ExpenseTypeConverterService expenseTypeConverter;
 
     private LocalDate initLocalDate(final Date date) {
         return Optional.ofNullable(date).map(Date::toLocalDate).orElse(null);
