@@ -15,13 +15,11 @@ import hu.restoffice.transaction.entity.PartnerContact;
  */
 public interface PartnerRepository extends JpaRepository<Partner, Long> {
 
-    List<Partner> findByTechnical(@Param("technical") Boolean technical);
+    List<Partner> findByTechnical(Boolean technical);
 
     Optional<Partner> findByNameIgnoreCase(String name);
 
     List<Partner> findByNameContainingIgnoreCase(String name);
-
-    Long countByNameIgnoreCase(String name);
 
     @Query("select p.contact from Partner p where p.id = :id")
     Optional<PartnerContact> findContactByPartnerId(@Param("id") Long id);
