@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import hu.restoffice.commons.error.ServiceException;
 import hu.restoffice.commons.error.ServiceException.Type;
 import hu.restoffice.commons.service.AbstractCRUDService;
-import hu.restoffice.transaction.domain.IncomeTypeRepository;
 import hu.restoffice.transaction.entity.IncomeType;
+import hu.restoffice.transaction.repository.IncomeTypeRepository;
 
 /**
  *
