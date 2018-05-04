@@ -7,6 +7,8 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +36,7 @@ public class ExpenseTypeControllerImpl implements ExpenseTypeController {
      * @see hu.restoffice.commons.web.DefaultController#addResource(java.lang.Object)
      */
     @Override
-    public ResponseEntity<?> addResource(final ExpenseTypeStub stub) throws ServiceException {
+    public ResponseEntity<?> addResource(@RequestBody final ExpenseTypeStub stub) throws ServiceException {
         return expenseTypeControllerDefault.addResource(stub);
     }
 
@@ -45,7 +47,7 @@ public class ExpenseTypeControllerImpl implements ExpenseTypeController {
      * @see hu.restoffice.commons.web.DefaultController#deleteResource(java.lang.Long)
      */
     @Override
-    public ResponseEntity<Object> deleteResource(final Long id) throws ServiceException {
+    public ResponseEntity<Object> deleteResource(@PathVariable("id") final Long id) throws ServiceException {
         return expenseTypeControllerDefault.deleteResource(id);
     }
 
@@ -56,7 +58,7 @@ public class ExpenseTypeControllerImpl implements ExpenseTypeController {
      * @see hu.restoffice.commons.web.DefaultController#findResourceById(java.lang.Long)
      */
     @Override
-    public ResponseEntity<Object> findResourceById(final Long id) throws ServiceException {
+    public ResponseEntity<Object> findResourceById(@PathVariable("id") final Long id) throws ServiceException {
         return expenseTypeControllerDefault.findResourceById(id);
     }
 
@@ -95,16 +97,20 @@ public class ExpenseTypeControllerImpl implements ExpenseTypeController {
      *      java.lang.Object)
      */
     @Override
-    public ResponseEntity<Object> updateResource(final Long id, final ExpenseTypeStub stub) throws ServiceException {
+    public ResponseEntity<Object> updateResource(@PathVariable("id") final Long id,
+            @RequestBody final ExpenseTypeStub stub)
+                    throws ServiceException {
         return expenseTypeControllerDefault.updateResource(id, stub);
     }
 
+    @Override
     @GetMapping(params = "prodRelated")
     public ResponseEntity<List<ExpenseTypeStub>> findAll(@RequestParam("prodRelated") final Boolean prodRelated)
             throws ServiceException {
         return ResponseEntity.ok(converter().from(service().findAll(prodRelated)));
     }
 
+    @Override
     @GetMapping(params = "name")
     public ResponseEntity<ExpenseTypeStub> findByName(@RequestParam("name") final String name) throws ServiceException {
         return ResponseEntity.ok(converter().from(service().findByName(name)));

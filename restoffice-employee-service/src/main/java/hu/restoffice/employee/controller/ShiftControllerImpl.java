@@ -7,6 +7,8 @@ import javax.validation.constraints.Digits;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +35,7 @@ public class ShiftControllerImpl implements ShiftController {
      * @see hu.restoffice.commons.web.DefaultController#deleteResource(java.lang.Long)
      */
     @Override
-    public ResponseEntity<?> deleteResource(final Long id) throws ServiceException {
+    public ResponseEntity<?> deleteResource(@PathVariable("id") final Long id) throws ServiceException {
         return shiftDefaultController.deleteResource(id);
     }
 
@@ -44,7 +46,7 @@ public class ShiftControllerImpl implements ShiftController {
      * @see hu.restoffice.commons.web.DefaultController#findResourceById(java.lang.Long)
      */
     @Override
-    public ResponseEntity<?> findResourceById(final Long id) throws ServiceException {
+    public ResponseEntity<?> findResourceById(@PathVariable("id") final Long id) throws ServiceException {
         return shiftDefaultController.findResourceById(id);
     }
 
@@ -80,7 +82,7 @@ public class ShiftControllerImpl implements ShiftController {
      * @see hu.restoffice.commons.web.CRUDController#addResource(java.lang.Object)
      */
     @Override
-    public ResponseEntity<?> addResource(final ShiftStub arg0) throws ServiceException {
+    public ResponseEntity<?> addResource(@RequestBody final ShiftStub arg0) throws ServiceException {
         return shiftDefaultController.addResource(arg0);
     }
 
@@ -91,8 +93,9 @@ public class ShiftControllerImpl implements ShiftController {
      * java.lang.Object)
      */
     @Override
-    public ResponseEntity<?> updateResource(@Digits(fraction = 0, integer = 10) final Long arg0, final ShiftStub arg1)
-            throws ServiceException {
+    public ResponseEntity<?> updateResource(@PathVariable("id") @Digits(fraction = 0, integer = 10) final Long arg0,
+            @RequestBody final ShiftStub arg1)
+                    throws ServiceException {
         return shiftDefaultController.updateResource(arg0, arg1);
     }
 

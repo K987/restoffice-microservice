@@ -8,6 +8,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +37,7 @@ public class EmployeeShiftControllerImpl implements EmployeeShiftController {
      * @see hu.restoffice.commons.web.DefaultController#deleteResource(java.lang.Long)
      */
     @Override
-    public ResponseEntity<?> deleteResource(final Long id) throws ServiceException {
+    public ResponseEntity<?> deleteResource(@PathVariable("id") final Long id) throws ServiceException {
         return employeeShiftDefaultController.deleteResource(id);
     }
 
@@ -46,7 +48,7 @@ public class EmployeeShiftControllerImpl implements EmployeeShiftController {
      * @see hu.restoffice.commons.web.DefaultController#findResourceById(java.lang.Long)
      */
     @Override
-    public ResponseEntity<?> findResourceById(final Long id) throws ServiceException {
+    public ResponseEntity<?> findResourceById(@PathVariable("id") final Long id) throws ServiceException {
         return employeeShiftDefaultController.findResourceById(id);
     }
 
@@ -82,7 +84,7 @@ public class EmployeeShiftControllerImpl implements EmployeeShiftController {
      * @see hu.restoffice.commons.web.CRUDController#addResource(java.lang.Object)
      */
     @Override
-    public ResponseEntity<?> addResource(final EmployeeShiftStub arg0) throws ServiceException {
+    public ResponseEntity<?> addResource(@RequestBody final EmployeeShiftStub arg0) throws ServiceException {
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(
                 "{\"message\" : \"this operation is not supported\", \"description\": \"try this: POST: /{employeeId}/{ShiftId} \"}");
     }
@@ -94,8 +96,8 @@ public class EmployeeShiftControllerImpl implements EmployeeShiftController {
      * java.lang.Object)
      */
     @Override
-    public ResponseEntity<?> updateResource(@Digits(fraction = 0, integer = 10) final Long arg0,
-            final EmployeeShiftStub arg1) throws ServiceException {
+    public ResponseEntity<?> updateResource(@PathVariable("id") @Digits(fraction = 0, integer = 10) final Long arg0,
+            @RequestBody final EmployeeShiftStub arg1) throws ServiceException {
         return employeeShiftDefaultController.updateResource(arg0, arg1);
     }
 
@@ -107,8 +109,9 @@ public class EmployeeShiftControllerImpl implements EmployeeShiftController {
      * java.lang.Long, hu.restoffice.employee.entity.EmployeeShift)
      */
     @Override
-    public ResponseEntity<EmployeeShiftStub> add(final Long empId, final Long shiftId, final EmployeeShift body)
-            throws ServiceException {
+    public ResponseEntity<EmployeeShiftStub> add(@PathVariable("employeeId") final Long empId,
+            @PathVariable("shiftId") final Long shiftId, @RequestBody final EmployeeShift body)
+                    throws ServiceException {
         return ResponseEntity.ok(converter().from(service().add(body, empId, shiftId)));
     }
 

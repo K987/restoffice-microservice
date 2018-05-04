@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.restoffice.cashregister.converter.RegisterCloseConverterService;
@@ -124,8 +125,9 @@ public class RegisterCloseControllerImpl implements RegisterCloseController {
      * findResourceByDate(java.time.LocalDate, java.time.LocalDate)
      */
     @Override
-    public ResponseEntity<List<?>> findResourceByDate(final LocalDate from, final LocalDate to)
-            throws ServiceException {
+    public ResponseEntity<List<?>> findResourceByDate(@RequestParam("fromDate") final LocalDate from,
+            @RequestParam("toDate") final LocalDate to)
+                    throws ServiceException {
         List<RegisterClose> rtrn;
         if (to != null)
             rtrn = service().getClosesByDate(from);

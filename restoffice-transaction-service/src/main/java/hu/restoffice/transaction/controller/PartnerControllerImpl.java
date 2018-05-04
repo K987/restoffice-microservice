@@ -105,7 +105,7 @@ public class PartnerControllerImpl implements PartnerController {
      */
     @Override
     public ResponseEntity<Object> updateResource(@PathVariable("id") final Long id,
-            @ReesuestBody final final PartnerStub stub) throws ServiceException {
+            @RequestBody final PartnerStub stub) throws ServiceException {
         return partnerControllerDefault.updateResource(id, stub);
     }
 

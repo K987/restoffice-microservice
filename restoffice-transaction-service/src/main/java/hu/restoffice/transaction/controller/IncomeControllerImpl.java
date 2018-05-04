@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +38,7 @@ public class IncomeControllerImpl implements IncomeController {
      * @see hu.restoffice.commons.web.DefaultController#addResource(java.lang.Object)
      */
     @Override
-    public ResponseEntity<?> addResource(final IncomeStub stub) throws ServiceException {
+    public ResponseEntity<?> addResource(@RequestBody final IncomeStub stub) throws ServiceException {
         return incomeControllerDefault.addResource(stub);
     }
 
@@ -48,7 +49,7 @@ public class IncomeControllerImpl implements IncomeController {
      * @see hu.restoffice.commons.web.DefaultController#deleteResource(java.lang.Long)
      */
     @Override
-    public ResponseEntity<Object> deleteResource(final Long id) throws ServiceException {
+    public ResponseEntity<Object> deleteResource(@PathVariable("id") final Long id) throws ServiceException {
         return incomeControllerDefault.deleteResource(id);
     }
 
@@ -59,7 +60,7 @@ public class IncomeControllerImpl implements IncomeController {
      * @see hu.restoffice.commons.web.DefaultController#findResourceById(java.lang.Long)
      */
     @Override
-    public ResponseEntity<Object> findResourceById(final Long id) throws ServiceException {
+    public ResponseEntity<Object> findResourceById(@PathVariable("id") final Long id) throws ServiceException {
         return incomeControllerDefault.findResourceById(id);
     }
 
@@ -98,7 +99,8 @@ public class IncomeControllerImpl implements IncomeController {
      *      java.lang.Object)
      */
     @Override
-    public ResponseEntity<Object> updateResource(final Long id, final IncomeStub stub) throws ServiceException {
+    public ResponseEntity<Object> updateResource(@PathVariable("id") final Long id, @RequestBody final IncomeStub stub)
+            throws ServiceException {
         return incomeControllerDefault.updateResource(id, stub);
     }
 

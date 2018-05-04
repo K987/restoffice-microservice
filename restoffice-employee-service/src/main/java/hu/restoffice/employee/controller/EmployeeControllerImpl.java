@@ -5,10 +5,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.restoffice.commons.error.ServiceException;
@@ -34,7 +38,7 @@ public class EmployeeControllerImpl implements EmployeeController {
      * @see hu.restoffice.commons.web.DefaultController#deleteResource(java.lang.Long)
      */
     @Override
-    public ResponseEntity<?> deleteResource(final Long id) throws ServiceException {
+    public ResponseEntity<?> deleteResource(@PathVariable("id") final Long id) throws ServiceException {
         return employeeDefaultController.deleteResource(id);
     }
 
@@ -45,7 +49,7 @@ public class EmployeeControllerImpl implements EmployeeController {
      * @see hu.restoffice.commons.web.DefaultController#findResourceById(java.lang.Long)
      */
     @Override
-    public ResponseEntity<?> findResourceById(final Long id) throws ServiceException {
+    public ResponseEntity<?> findResourceById(@PathVariable("id") final Long id) throws ServiceException {
         return employeeDefaultController.findResourceById(id);
     }
 
@@ -81,7 +85,7 @@ public class EmployeeControllerImpl implements EmployeeController {
      * @see hu.restoffice.commons.web.CRUDController#addResource(java.lang.Object)
      */
     @Override
-    public ResponseEntity<?> addResource(final EmployeeStub arg0) throws ServiceException {
+    public ResponseEntity<?> addResource(@RequestBody final EmployeeStub arg0) throws ServiceException {
         return employeeDefaultController.addResource(arg0);
     }
 
@@ -92,15 +96,16 @@ public class EmployeeControllerImpl implements EmployeeController {
      * java.lang.Object)
      */
     @Override
-    public ResponseEntity<?> updateResource(@Digits(fraction = 0, integer = 10) final Long arg0,
-            final EmployeeStub arg1) throws ServiceException {
+    public ResponseEntity<?> updateResource(@PathVariable("id") @Digits(fraction = 0, integer = 10) final Long arg0,
+            @RequestBody final EmployeeStub arg1) throws ServiceException {
         return employeeDefaultController.updateResource(arg0, arg1);
     }
 
     @Override
-    public ResponseEntity<?> getEmployeeResourceScheduleBetweenDates(final Long empId, final LocalDate from,
-            final LocalDate to)
-            throws ServiceException {
+    public ResponseEntity<?> getEmployeeResourceScheduleBetweenDates(@PathVariable("id") final Long empId,
+            @RequestParam("from-date") @NotNull final LocalDate from,
+            @RequestParam("to-date") @NotNull final LocalDate to)
+                    throws ServiceException {
         // TODO: redirektelni a shift controller egy szolgáltatásához
         return null;
     }

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +41,7 @@ public class ExpenseControllerImpl implements ExpenseController {
      * @see hu.restoffice.commons.web.DefaultController#addResource(java.lang.Object)
      */
     @Override
-    public ResponseEntity<?> addResource(final ExpenseStub stub) throws ServiceException {
+    public ResponseEntity<?> addResource(@RequestBody final ExpenseStub stub) throws ServiceException {
         return expenseControllerDefault.addResource(stub);
     }
 
@@ -51,7 +52,7 @@ public class ExpenseControllerImpl implements ExpenseController {
      * @see hu.restoffice.commons.web.DefaultController#deleteResource(java.lang.Long)
      */
     @Override
-    public ResponseEntity<Object> deleteResource(final Long id) throws ServiceException {
+    public ResponseEntity<Object> deleteResource(@PathVariable("id") final Long id) throws ServiceException {
         return expenseControllerDefault.deleteResource(id);
     }
 
@@ -62,7 +63,7 @@ public class ExpenseControllerImpl implements ExpenseController {
      * @see hu.restoffice.commons.web.DefaultController#findResourceById(java.lang.Long)
      */
     @Override
-    public ResponseEntity<Object> findResourceById(final Long id) throws ServiceException {
+    public ResponseEntity<Object> findResourceById(@PathVariable("id") final Long id) throws ServiceException {
         return expenseControllerDefault.findResourceById(id);
     }
 
@@ -101,7 +102,9 @@ public class ExpenseControllerImpl implements ExpenseController {
      *      java.lang.Object)
      */
     @Override
-    public ResponseEntity<Object> updateResource(final Long id, final ExpenseStub stub) throws ServiceException {
+    public ResponseEntity<Object> updateResource(@PathVariable("id") final Long id,
+            @RequestBody final ExpenseStub stub)
+                    throws ServiceException {
         return expenseControllerDefault.updateResource(id, stub);
     }
 
