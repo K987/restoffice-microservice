@@ -3,166 +3,101 @@ package hu.restoffice.transaction.domain;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  *
  */
-public class ExpenseStub {
+public class ExpenseStub extends FinancialTransactionStub {
 
-    private final Long id;
-    @NotBlank
-    private final String docId;
     @NotNull
-    private final PartnerStub partner;
+    @JsonProperty
+    private String expenseType;
+    @JsonIgnore
+    private Long expenseTypeId;
+
     @NotNull
-    private final PaymentMethod paymentMethod;
-    @NotNull
-    private final ExpenseTypeStub expenseType;
-    @NotNull
-    private final LocalDate registered;
-    private final LocalDate payed;
-    @Positive
-    private final BigDecimal grossTotal;
-    @NotNull
-    @FutureOrPresent
-    private final LocalDate expiry;
-    @NotNull
-    private final DocumentType docType;
-    private final String description;
-    private final LocalDate accPeriodEnd;
-    private final LocalDate accPeriodStart;
+    @JsonProperty
+    private String costCenter;
+    @JsonIgnore
+    private Long costCenterId;
+
+    public ExpenseStub() {
+
+    }
 
     /**
      * @param id
      * @param docId
-     * @param partnerId
-     * @param partner
-     * @param paymentMethod
-     * @param incomeTypeId
-     * @param incomeType
-     * @param registered
-     * @param payed
-     * @param grossTotal
-     * @param expiry
      * @param docType
+     * @param partnerName
+     * @param partnerId
+     * @param payMethod
+     * @param grossTotal
      * @param description
-     * @param accPeriodEnd
+     * @param registered
+     * @param expiry
+     * @param payed
      * @param accPeriodStart
+     * @param accPeriodEnd
+     * @param expenseType
+     * @param expenseTypeId
      */
-    public ExpenseStub(final Long id, final String docId, final PartnerStub partner, final PaymentMethod paymentMethod,
-            final ExpenseTypeStub expenseType,
-            final LocalDate registered, final LocalDate payed, final BigDecimal grossTotal, final LocalDate expiry,
-            final DocumentType docType, final String description, final LocalDate accPeriodEnd,
-            final LocalDate accPeriodStart) {
-        super();
-        this.id = id;
-        this.docId = docId;
-        this.partner = partner;
-        this.paymentMethod = paymentMethod;
+    public ExpenseStub(final Long id, final String docId, final DocumentType docType, final String partnerName,
+            final Long partnerId, final PaymentMethod payMethod, final BigDecimal grossTotal,
+            final String description, final LocalDate registered, final LocalDate expiry, final LocalDate payed,
+            final LocalDate accPeriodStart, final LocalDate accPeriodEnd, final String expenseType,
+            final Long expenseTypeId, final String costCenterName, final Long costCenterId) {
+        super(id, docId, docType, partnerName, partnerId, payMethod, grossTotal, description, registered, expiry, payed,
+                accPeriodStart, accPeriodEnd);
         this.expenseType = expenseType;
-        this.registered = registered;
-        this.payed = payed;
-        this.grossTotal = grossTotal;
-        this.expiry = payed;
-        this.docType = docType;
-        this.description = description;
-        this.accPeriodEnd = accPeriodEnd;
-        this.accPeriodStart = accPeriodStart;
+        this.expenseTypeId = expenseTypeId;
+        costCenter = costCenterName;
+        this.costCenterId = costCenterId;
     }
 
     /**
-     * @return the id
+     * @return the expenseType
      */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @return the docId
-     */
-    public String getDocId() {
-        return docId;
-    }
-
-    /**
-     * @return the partner
-     */
-    public PartnerStub getPartner() {
-        return partner;
-    }
-
-    /**
-     * @return the paymentMethod
-     */
-    public PaymentMethod getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    /**
-     * @return the incomeType
-     */
-    public ExpenseTypeStub getExpenseType() {
+    public String getExpenseType() {
         return expenseType;
     }
 
     /**
-     * @return the registered
+     * @return the expenseTypeId
      */
-    public LocalDate getRegistered() {
-        return registered;
+    public Long getExpenseTypeId() {
+        return expenseTypeId;
     }
 
     /**
-     * @return the payed
+     * @return the costCenter
      */
-    public LocalDate getPayed() {
-        return payed;
+    public String getCostCenter() {
+        return costCenter;
     }
 
     /**
-     * @return the grossTotal
+     * @return the costCenterId
      */
-    public BigDecimal getGrossTotal() {
-        return grossTotal;
+    public Long getCostCenterId() {
+        return costCenterId;
     }
 
-    /**
-     * @return the expiry
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
      */
-    public LocalDate getExpiry() {
-        return expiry;
+    @Override
+    public String toString() {
+        return "ExpenseStub [expenseType=" + expenseType + ", expenseTypeId=" + expenseTypeId + ", costCenter="
+                + costCenter + ", costCenterId=" + costCenterId + " SUPER: " + super.toString() + "]";
     }
 
-    /**
-     * @return the docType
-     */
-    public DocumentType getDocType() {
-        return docType;
-    }
 
-    /**
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @return the accPeriodEnd
-     */
-    public LocalDate getAccPeriodEnd() {
-        return accPeriodEnd;
-    }
-
-    /**
-     * @return the accPeriodStart
-     */
-    public LocalDate getAccPeriodStart() {
-        return accPeriodStart;
-    }
 
 }

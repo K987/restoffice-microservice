@@ -9,7 +9,7 @@ import hu.restoffice.transaction.entity.CostCenter;
  *
  */
 @Service
-public class CostCenterConverterServiceImpl implements ConstCenterConverterService {
+public class CostCenterConverterServiceImpl implements CostCenterConverterService {
 
     /*
      * (non-Javadoc)

@@ -3,16 +3,28 @@ package hu.restoffice.transaction.domain;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *
  */
 public class CostCenterStub {
 
+    @JsonProperty
     private Long id;
     @NotNull
+    @JsonProperty
     private Boolean defaultCostCenter;
     @NotBlank
+    @JsonProperty
     private String name;
+
+    /**
+     *
+     */
+    public CostCenterStub() {
+        super();
+    }
 
     /**
      * @param id
@@ -45,6 +57,16 @@ public class CostCenterStub {
      */
     public String getName() {
         return name;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "CostCenterStub [id=" + id + ", defaultCostCenter=" + defaultCostCenter + ", name=" + name + "]";
     }
 
 }

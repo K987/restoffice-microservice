@@ -3,17 +3,28 @@ package hu.restoffice.transaction.domain;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *
  */
 public class IncomeTypeStub {
 
-    private final Long id;
+    @JsonProperty
+    private Long id;
     @NotBlank
-    private final String name;
+    @JsonProperty
+    private String name;
     @NotNull
-    private final Boolean prodRelated;
+    @JsonProperty
+    private Boolean prodRelated;
 
+    /**
+     *
+     */
+    public IncomeTypeStub() {
+        // TODO Auto-generated constructor stub
+    }
     /**
      * @param id
      * @param name
@@ -47,4 +58,13 @@ public class IncomeTypeStub {
         return prodRelated;
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "IncomeTypeStub [id=" + id + ", name=" + name + ", prodRelated=" + prodRelated + "]";
+    }
 }

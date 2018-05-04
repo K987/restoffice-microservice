@@ -5,22 +5,38 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *
  */
 public class PartnerStub {
 
-    private final Long id;
+    @JsonProperty
+    private Long id;
     @NotBlank
-    private final String name;
-    private final String account;
-    private final String contactName;
+    @JsonProperty
+    private String name;
+    @JsonProperty
+    private String account;
+    @JsonProperty
+    private String contactName;
     @Pattern(regexp = "^\\\\(?(\\\\d{2})\\\\)?[- ]?(\\\\d{3})[- ]?(\\\\d{4})$", message = "invalid phone number")
-    private final String contactPhone;
+    @JsonProperty
+    private String contactPhone;
     @Email(message = "invalid email address")
-    private final String contactEmail;
+    @JsonProperty
+    private String contactEmail;
     @NotNull
-    private final Boolean technical;
+    @JsonProperty
+    private Boolean technical;
+
+    /**
+     *
+     */
+    public PartnerStub() {
+        // TODO Auto-generated constructor stub
+    }
 
     /**
      * @param id
@@ -31,8 +47,8 @@ public class PartnerStub {
      * @param contactEmail
      * @param technical
      */
-    public PartnerStub(final Long id, @NotBlank final String name, final String account, final String contactName,
-            final String contactPhone, final String contactEmail, @NotNull final Boolean technical) {
+    public PartnerStub(final Long id, final String name, final String account, final String contactName,
+            final String contactPhone, final String contactEmail, final Boolean technical) {
         super();
         this.id = id;
         this.name = name;
@@ -90,6 +106,18 @@ public class PartnerStub {
      */
     public Boolean getTechnical() {
         return technical;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "PartnerStub [id=" + id + ", name=" + name + ", account=" + account + ", contactName=" + contactName
+                + ", contactPhone=" + contactPhone + ", contactEmail=" + contactEmail + ", technical=" + technical
+                + "]";
     }
 
 }

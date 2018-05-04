@@ -2,6 +2,8 @@ package hu.restoffice.transaction.service;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import hu.restoffice.commons.error.ServiceException;
@@ -17,7 +19,19 @@ import hu.restoffice.transaction.repository.PartnerRepository;
 @Service
 public class PartnerServiceImpl extends AbstractCRUDService<Partner, PartnerRepository> implements PartnerService {
 
+    private Logger log = LogManager.getLogger();
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.commons.service.AbstractCRUDService#findById(java.lang.Long)
+     */
+    @Override
+    public Partner findById(final Long id) throws ServiceException {
+        log.info("ing service " + id);
+        return super.findById(id);
+    }
     /*
      * (non-Javadoc)
      *
@@ -144,7 +158,7 @@ public class PartnerServiceImpl extends AbstractCRUDService<Partner, PartnerRepo
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * hu.restoffice.commons.service.AbstractCRUDService#isDeletable(java.lang.Long)
      */
