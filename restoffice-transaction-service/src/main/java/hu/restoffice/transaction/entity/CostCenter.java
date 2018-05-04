@@ -71,6 +71,7 @@ public class CostCenter implements Serializable, Identity {
         return expense;
     }
 
+    @Override
     public Long getId() {
         return id;
     }

@@ -1,7 +1,6 @@
 package hu.restoffice.transaction.entity;
 
 import javax.persistence.Column;
-import javax.validation.constraints.Email;
 
 /**
  *
@@ -14,7 +13,7 @@ public class PartnerContact {
     @Column(name = "partner_contact_phone")
     private String phone;
 
-    @Email
+
     @Column(name = "partner_contact_email")
     private String email;
 

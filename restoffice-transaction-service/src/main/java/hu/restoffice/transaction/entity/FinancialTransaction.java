@@ -14,7 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.FutureOrPresent;
 
 import hu.restoffice.transaction.domain.DocumentType;
 import hu.restoffice.transaction.domain.PaymentMethod;
@@ -52,7 +51,6 @@ public abstract class FinancialTransaction {
     @Column(nullable = false)
     private Date registered;
 
-    @FutureOrPresent
     private Date expiry;
 
     private Date payed;

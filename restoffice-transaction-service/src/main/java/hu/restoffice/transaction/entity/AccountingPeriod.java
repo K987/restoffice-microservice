@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.Calendar;
 
 import javax.persistence.Embeddable;
+import javax.persistence.PostLoad;
 import javax.persistence.Transient;
 
 /**
@@ -17,7 +18,7 @@ public class AccountingPeriod {
     private Date endDate;
 
     @Transient
-    private Integer periodLength;
+    private Integer monthsBetween;
 
     public AccountingPeriod() {
 
@@ -32,12 +33,10 @@ public class AccountingPeriod {
         this.endDate = endDate;
     }
 
-    /**
-     * sets variable period length by counting the months between start and and
-     * dates
-     */
-    private void setMonths() {
-        periodLength = 1;
+    @PostLoad
+    protected void setMonths() {
+
+        monthsBetween = 1;
         if (startDate != null && endDate != null && endDate.getTime() >= startDate.getTime()) {
             Calendar start = Calendar.getInstance();
             Calendar end = Calendar.getInstance();
@@ -45,7 +44,7 @@ public class AccountingPeriod {
             end.setTime(endDate);
             int years = end.get(Calendar.YEAR) - start.get(Calendar.YEAR);
             int months = years * 12 + end.get(Calendar.MONTH) - end.get(Calendar.MONTH);
-            periodLength += months;
+            monthsBetween += months;
         }
     }
 
@@ -85,9 +84,9 @@ public class AccountingPeriod {
      * @return the monthsBetween
      */
     public int getPeriodLength() {
-        if (periodLength == null) {
+        if (monthsBetween == null) {
             setMonths();
         }
-        return periodLength;
+        return monthsBetween;
     }
 }
