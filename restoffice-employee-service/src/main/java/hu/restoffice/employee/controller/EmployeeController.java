@@ -26,7 +26,8 @@ public interface EmployeeController extends CRUDController<EmployeeStub> {
      * @throws ServiceException
      */
     @GetMapping(path = "/{id}", params = { "from-date, to-date" })
-    ResponseEntity<?> getSchedule(@PathVariable("id") Long empId, @RequestParam("from-date") @NotNull LocalDate from,
+    ResponseEntity<?> getEmployeeResourceScheduleBetweenDates(@PathVariable("id") Long empId,
+            @RequestParam("from-date") @NotNull LocalDate from,
             @RequestParam("to-date") @NotNull LocalDate to) throws ServiceException;
 
 }

@@ -98,7 +98,8 @@ public class EmployeeControllerImpl implements EmployeeController {
     }
 
     @Override
-    public ResponseEntity<?> getSchedule(final Long empId, final LocalDate from, final LocalDate to)
+    public ResponseEntity<?> getEmployeeResourceScheduleBetweenDates(final Long empId, final LocalDate from,
+            final LocalDate to)
             throws ServiceException {
         // TODO: redirektelni a shift controller egy szolgáltatásához
         return null;

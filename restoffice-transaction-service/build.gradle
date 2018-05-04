@@ -33,6 +33,7 @@ configurations {
     compile.exclude module: 'spring-boot-starter-logging'
 }
 dependencies {
+    compile files('../restoffice-commons/build/libs/restoffice-commons-0.0.1-SNAPSHOT.jar')
 	//boot.web
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-actuator')
