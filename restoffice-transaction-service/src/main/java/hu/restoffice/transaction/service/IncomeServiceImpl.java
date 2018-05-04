@@ -9,9 +9,9 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
-import hu.restoffice.commons.AbstractCRUDService;
-import hu.restoffice.commons.ServiceException;
-import hu.restoffice.commons.ServiceException.Type;
+import hu.restoffice.commons.error.ServiceException;
+import hu.restoffice.commons.error.ServiceException.Type;
+import hu.restoffice.commons.service.AbstractCRUDService;
 import hu.restoffice.transaction.domain.DocumentType;
 import hu.restoffice.transaction.domain.PaymentMethod;
 import hu.restoffice.transaction.entity.AccountingPeriod;
@@ -31,15 +31,7 @@ public class IncomeServiceImpl extends AbstractCRUDService<Income, IncomeReposit
 
     @Autowired
     private PartnerService partnerService;
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * hu.restoffice.transaction.service.AbstractCRUDService#add(java.lang.Object)
-     */
-    /* (non-Javadoc)
-     * @see hu.restoffice.transaction.service.IncomeService#add(hu.restoffice.transaction.entity.Income)
-     */
+
     @Override
     public Income add(final Income entity) throws ServiceException {
 
@@ -72,9 +64,6 @@ public class IncomeServiceImpl extends AbstractCRUDService<Income, IncomeReposit
      * @see
      * hu.restoffice.transaction.service.AbstractCRUDService#update(java.lang.Long,
      * java.lang.Object)
-     */
-    /* (non-Javadoc)
-     * @see hu.restoffice.transaction.service.IncomeService#update(java.lang.Long, hu.restoffice.transaction.entity.Income)
      */
     @Override
     public Income update(final Long id, final Income entity) throws ServiceException {
@@ -154,6 +143,17 @@ public class IncomeServiceImpl extends AbstractCRUDService<Income, IncomeReposit
         if (r != null) {
             old.setRegistered(r);
         }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * hu.restoffice.commons.service.AbstractCRUDService#isDeletable(java.lang.Long)
+     */
+    @Override
+    protected boolean isDeletable(final Long id) throws ServiceException {
+        return false;
     }
 
 }

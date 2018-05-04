@@ -3,6 +3,7 @@ package hu.restoffice.transaction.domain;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -27,6 +28,7 @@ public class ExpenseStub {
     @Positive
     private final BigDecimal grossTotal;
     @NotNull
+    @FutureOrPresent
     private final LocalDate expiry;
     @NotNull
     private final DocumentType docType;

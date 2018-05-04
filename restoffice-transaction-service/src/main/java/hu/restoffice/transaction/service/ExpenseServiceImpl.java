@@ -9,9 +9,9 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
-import hu.restoffice.commons.AbstractCRUDService;
-import hu.restoffice.commons.ServiceException;
-import hu.restoffice.commons.ServiceException.Type;
+import hu.restoffice.commons.error.ServiceException;
+import hu.restoffice.commons.error.ServiceException.Type;
+import hu.restoffice.commons.service.AbstractCRUDService;
 import hu.restoffice.transaction.domain.DocumentType;
 import hu.restoffice.transaction.domain.PaymentMethod;
 import hu.restoffice.transaction.entity.AccountingPeriod;
@@ -143,6 +143,17 @@ public class ExpenseServiceImpl extends AbstractCRUDService<Expense, ExpenseRepo
             old.setRegistered(r);
         }
 
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.commons.service.AbstractCRUDService#isDeletable(java.lang.Long)
+     */
+    @Override
+    protected boolean isDeletable(final Long id) throws ServiceException {
+        return false;
     }
 
 }

@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import hu.restoffice.commons.AbstractCRUDService;
-import hu.restoffice.commons.ServiceException;
-import hu.restoffice.commons.ServiceException.Type;
+import hu.restoffice.commons.error.ServiceException;
+import hu.restoffice.commons.error.ServiceException.Type;
+import hu.restoffice.commons.service.AbstractCRUDService;
 import hu.restoffice.transaction.entity.ExpenseType;
 import hu.restoffice.transaction.repository.ExpenseTypeRepository;
 
@@ -70,6 +70,17 @@ implements ExpenseTypeService {
             old.setName(name);
         if (prodRelated != null)
             old.setProdRelated(prodRelated);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.commons.service.AbstractCRUDService#isDeletable(java.lang.Long)
+     */
+    @Override
+    protected boolean isDeletable(final Long id) throws ServiceException {
+        return !repo.findIfHasExpenesesRelated(id).isPresent();
     }
 
 }

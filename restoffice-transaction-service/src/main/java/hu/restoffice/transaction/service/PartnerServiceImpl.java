@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import hu.restoffice.commons.AbstractCRUDService;
-import hu.restoffice.commons.ServiceException;
-import hu.restoffice.commons.ServiceException.Type;
+import hu.restoffice.commons.error.ServiceException;
+import hu.restoffice.commons.error.ServiceException.Type;
+import hu.restoffice.commons.service.AbstractCRUDService;
 import hu.restoffice.transaction.entity.Partner;
 import hu.restoffice.transaction.entity.PartnerContact;
 import hu.restoffice.transaction.repository.PartnerRepository;
@@ -140,7 +140,17 @@ public class PartnerServiceImpl extends AbstractCRUDService<Partner, PartnerRepo
         if (technical != null) {
             old.setTechnical(technical);
         }
+    }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * hu.restoffice.commons.service.AbstractCRUDService#isDeletable(java.lang.Long)
+     */
+    @Override
+    protected boolean isDeletable(final Long id) throws ServiceException {
+        return repo.findUnused().stream().filter(p -> p.getId() == id).findFirst().isPresent();
     }
 
 }

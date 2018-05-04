@@ -2,9 +2,9 @@ package hu.restoffice.transaction.service;
 
 import org.springframework.stereotype.Service;
 
-import hu.restoffice.commons.AbstractCRUDService;
-import hu.restoffice.commons.ServiceException;
-import hu.restoffice.commons.ServiceException.Type;
+import hu.restoffice.commons.error.ServiceException;
+import hu.restoffice.commons.error.ServiceException.Type;
+import hu.restoffice.commons.service.AbstractCRUDService;
 import hu.restoffice.transaction.entity.CostCenter;
 import hu.restoffice.transaction.repository.CostCenterRepository;
 
@@ -64,5 +64,15 @@ public class CostCenterServiceImpl extends AbstractCRUDService<CostCenter, CostC
 
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.commons.service.AbstractCRUDService#isDeletable(java.lang.Long)
+     */
+    @Override
+    protected boolean isDeletable(final Long id) throws ServiceException {
+        return !repo.findIfNotReferencedByTransaction(id).isPresent();
+    }
 
 }
