@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.restoffice.commons.error.ServiceException;
+import hu.restoffice.commons.error.ServiceException.Type;
 import hu.restoffice.commons.web.DefaultController;
 import hu.restoffice.employee.converter.EmployeeShiftConverterService;
 import hu.restoffice.employee.domain.EmployeeShiftStub;
-import hu.restoffice.employee.entity.EmployeeShift;
 import hu.restoffice.employee.service.EmployeeShiftService;
 
 /**
@@ -85,8 +85,8 @@ public class EmployeeShiftControllerImpl implements EmployeeShiftController {
      */
     @Override
     public ResponseEntity<?> addResource(@RequestBody final EmployeeShiftStub arg0) throws ServiceException {
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(
-                "{\"message\" : \"this operation is not supported\", \"description\": \"try this: POST: /{employeeId}/{ShiftId} \"}");
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+                .body(new ServiceException(Type.UNSUPPORTED, "try this: POST: employee/{employeeId}/shift/{shiftId}"));
     }
 
     /*
@@ -101,18 +101,5 @@ public class EmployeeShiftControllerImpl implements EmployeeShiftController {
         return employeeShiftDefaultController.updateResource(arg0, arg1);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * hu.restoffice.employee.controller.EmployeeShiftController#add(java.lang.Long,
-     * java.lang.Long, hu.restoffice.employee.entity.EmployeeShift)
-     */
-    @Override
-    public ResponseEntity<EmployeeShiftStub> add(@PathVariable("employeeId") final Long empId,
-            @PathVariable("shiftId") final Long shiftId, @RequestBody final EmployeeShift body)
-                    throws ServiceException {
-        return ResponseEntity.ok(converter().from(service().add(body, empId, shiftId)));
-    }
 
 }

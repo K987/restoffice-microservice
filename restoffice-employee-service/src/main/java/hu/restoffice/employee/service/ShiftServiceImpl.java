@@ -61,7 +61,7 @@ implements ShiftService {
      */
     @Override
     protected boolean isDeletable(final Long id) throws ServiceException {
-        return (repo.countByIdAndEmployeeShiftIsEmpty(id) == 0);
+        return (repo.findByIdAndEmployeeShiftIsEmpty(id).isPresent());
     }
 
     /*

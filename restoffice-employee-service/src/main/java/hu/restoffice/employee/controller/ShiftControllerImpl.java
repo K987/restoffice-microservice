@@ -8,10 +8,13 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.MediaType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.restoffice.commons.error.ServiceException;
@@ -103,14 +106,16 @@ public class ShiftControllerImpl implements ShiftController {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * hu.restoffice.employee.controller.ShiftController#getScheduleBetween(java.
      * time.LocalDate, java.time.LocalDate)
      */
     @Override
-    public ResponseEntity<?> getScheduleBetween(@NotNull final LocalDate from, @NotNull final LocalDate to)
-            throws ServiceException {
+    public ResponseEntity<?> getScheduleBetween(
+            @RequestParam("from-date") @NotNull @DateTimeFormat(iso = ISO.DATE) final LocalDate from,
+            @RequestParam("to-date") @NotNull @DateTimeFormat(iso = ISO.DATE) final LocalDate to)
+                    throws ServiceException {
         return ResponseEntity.ok(converter().from(service().getScheduleBetween(from, to)));
     }
 

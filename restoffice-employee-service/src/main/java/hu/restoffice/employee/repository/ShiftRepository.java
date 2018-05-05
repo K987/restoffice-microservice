@@ -34,6 +34,6 @@ public interface ShiftRepository extends JpaRepository<Shift, Long> {
     /**
      * @param id
      */
-    @Query("select count(s) from Shift s where s.id = :id and s.employeeShifts is Empty")
-    Long countByIdAndEmployeeShiftIsEmpty(@Param("id") Long id);
+    @Query("select s from Shift s where s.id = :id and s.employeeShifts is Empty")
+    Optional<Shift> findByIdAndEmployeeShiftIsEmpty(@Param("id") Long id);
 }
