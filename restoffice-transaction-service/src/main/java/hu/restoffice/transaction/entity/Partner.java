@@ -26,7 +26,7 @@ public class Partner implements Serializable, Identity {
     private static final long serialVersionUID = -8378660922522209425L;
 
     @Id
-    @SequenceGenerator(name = "PARTNERS_PARTNERID_GENERATOR", sequenceName = "PARTNERS_PARTNER_ID_SEQ")
+    @SequenceGenerator(name = "PARTNERS_PARTNERID_GENERATOR", sequenceName = "PARTNERS_PARTNER_ID_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PARTNERS_PARTNERID_GENERATOR")
     @Column(name = "partner_id", updatable = false, unique = true, nullable = false)
     private Long id;

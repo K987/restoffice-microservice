@@ -25,7 +25,7 @@ public class ExpenseType implements Serializable, Identity {
     private static final long serialVersionUID = -7693502259133533204L;
 
     @Id
-    @SequenceGenerator(name = "EXP_TYPES_EXPTYPEID_GENERATOR", sequenceName = "EXP_TYPES_EXP_TYPE_ID_SEQ")
+    @SequenceGenerator(name = "EXP_TYPES_EXPTYPEID_GENERATOR", sequenceName = "EXP_TYPES_EXP_TYPE_ID_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EXP_TYPES_EXPTYPEID_GENERATOR")
     @Column(name = "exp_type_id")
     private Long id;

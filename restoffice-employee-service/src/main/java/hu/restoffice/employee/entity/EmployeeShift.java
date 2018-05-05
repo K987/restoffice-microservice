@@ -26,7 +26,7 @@ import hu.restoffice.employee.domain.JobPosition;
  *
  */
 @Entity
-@Table(name = "employee_shift")
+@Table(name = "employee_shifts")
 public class EmployeeShift implements Serializable, Identity {
 
     private static final long serialVersionUID = 373756085894820717L;

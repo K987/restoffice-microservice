@@ -34,7 +34,7 @@ public abstract class FinancialTransaction {
     @Column(nullable = false)
     private DocumentType docType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private Partner party;
 

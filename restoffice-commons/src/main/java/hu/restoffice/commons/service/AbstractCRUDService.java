@@ -55,11 +55,14 @@ public abstract class AbstractCRUDService<T, R extends JpaRepository<T, Long>> {
 
     public T delete(final Long id) throws ServiceException {
         T toDel = this.findById(id);
-        try {
-            if (isDeletable(id))
+        if (isDeletable(id))
+            try {
                 repo.deleteById(id);
-        } catch (Exception e) {
-            throw new ServiceException(Type.UNKNOWN, "error when deleting entity", id);
+            } catch (Exception e) {
+                throw new ServiceException(Type.UNKNOWN, "can't delete entity", id);
+            }
+        else {
+            throw new ServiceException(Type.UNSUPPORTED, "deletion is not allowed", id);
         }
         return toDel;
     }

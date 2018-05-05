@@ -23,7 +23,7 @@ import hu.restoffice.transaction.service.ExpenseTypeService;
  *
  */
 @RestController
-@RequestMapping(path = "/misc/expenseType", produces = MediaType.APPLICATION_JSON)
+@RequestMapping(path = "/misc/expense-type", produces = MediaType.APPLICATION_JSON)
 public class ExpenseTypeControllerImpl implements ExpenseTypeController {
 
     @Autowired

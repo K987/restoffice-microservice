@@ -25,15 +25,15 @@ public class IncomeType implements Serializable, Identity {
     private static final long serialVersionUID = -3026418101327410970L;
 
     @Id
-    @SequenceGenerator(name = "INC_TYPES_INCTYPEID_GENERATOR", sequenceName = "INC_TYPES_INC_TYPE_ID_SEQ")
+    @SequenceGenerator(name = "INC_TYPES_INCTYPEID_GENERATOR", sequenceName = "INC_TYPES_INC_TYPE_ID_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "INC_TYPES_INCTYPEID_GENERATOR")
-    @Column(name = "income_type_id")
+    @Column(name = "inc_type_id")
     private Long id;
 
-    @Column(name = "income_type_name", unique = true, nullable = false, length = 100)
+    @Column(name = "inc_type_name", unique = true, nullable = false, length = 100)
     private String name;
 
-    @Column(name = "income_type_prod_related", nullable = false)
+    @Column(name = "inc_type_prod_related", nullable = false)
     private Boolean prodRelated;
 
     // bi-directional many-to-one association to Income

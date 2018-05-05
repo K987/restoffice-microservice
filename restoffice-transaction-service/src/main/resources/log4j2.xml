@@ -24,7 +24,7 @@
 		<Logger name="hu.restoffice" level="info" additivity="false">
 			<AppenderRef ref="FileAppender" />
 		</Logger>
-		<Root level="debug">
+		<Root level="info">
 			<AppenderRef ref="ConsoleAppender" />
 		</Root>
 	</Loggers>

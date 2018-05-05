@@ -80,7 +80,7 @@ implements ExpenseTypeService {
      */
     @Override
     protected boolean isDeletable(final Long id) throws ServiceException {
-        return !repo.findIfHasExpenesesRelated(id).isPresent();
+        return repo.findIfHasExpenesesRelated(id).isPresent();
     }
 
 }

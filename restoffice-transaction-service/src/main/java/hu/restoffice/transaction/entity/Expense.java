@@ -25,7 +25,7 @@ import hu.restoffice.commons.entity.Identity;
 @Entity
 @Table(name = "expenses")
 @SequenceGenerator(name = "TRANSACTION_ID_GENERATOR", sequenceName = "EXPENSES_EXPENSE_ID_SEQ")
-@AttributeOverrides(value = { @AttributeOverride(name = "id", column = @Column(name = "expense_id")),
+@AttributeOverrides(value = {
         @AttributeOverride(name = "docId", column = @Column(name = "expense_doc_id")),
         @AttributeOverride(name = "docType", column = @Column(name = "expense_doc_type")),
         @AttributeOverride(name = "payMethod", column = @Column(name = "expense_payment_method")),
@@ -35,10 +35,12 @@ import hu.restoffice.commons.entity.Identity;
         @AttributeOverride(name = "expiry", column = @Column(name = "expense_expiry_date")),
         @AttributeOverride(name = "payed", column = @Column(name = "expense_payed_date")),
         @AttributeOverride(name = "accPeriod.startDate", column = @Column(name = "expense_acc_per_start")),
-        @AttributeOverride(name = "accPeriod.endDate", column = @Column(name = "expense_acc_per_end")),
-        @AttributeOverride(name = "lastModifiedAt", column = @Column(name = "expense_last_modified_dt")) })
+        @AttributeOverride(name = "accPeriod.endDate", column = @Column(name = "expense_acc_per_end"))
+        // @AttributeOverride(name = "lastModifiedAt", column = @Column(name =
+        // "expense_last_modified_dt"))
+})
 @AssociationOverrides(value = {
-        @AssociationOverride(name = "party", joinColumns = @JoinColumn(name = "expense_issuer", referencedColumnName = "partner_id")),
+        @AssociationOverride(name = "party", joinColumns = @JoinColumn(name = "expense_issuer", referencedColumnName = "partner_id"))
         // @AssociationOverride(name = "lastModifiedBy", joinColumns = @JoinColumn(name
         // = "expense_last_modified_by", referencedColumnName = "user_id"))
 })
@@ -47,8 +49,9 @@ public class Expense extends FinancialTransaction implements Serializable, Ident
     private static final long serialVersionUID = 1451758378820116069L;
 
     @Id
-    @SequenceGenerator(name = "EXPENSES_EXPENSE_ID_GENERATOR", sequenceName = "INCOMES_INCOME_ID_SEQ")
+    @SequenceGenerator(name = "EXPENSES_EXPENSE_ID_GENERATOR", sequenceName = "EXPENSES_EXPENSE_ID_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EXPENSES_EXPENSE_ID_GENERATOR")
+    @Column(name = "expense_id")
     private Long id;
 
     // bi-directional many-to-one association to CostCenter

@@ -5,18 +5,15 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import hu.restoffice.commons.error.ServiceException;
 import hu.restoffice.commons.web.DefaultController;
@@ -31,8 +28,12 @@ import hu.restoffice.transaction.service.ExpenseService;
 @RequestMapping(path = "/expense", produces = MediaType.APPLICATION_JSON)
 public class ExpenseControllerImpl implements ExpenseController {
 
+    private static final Logger log = LogManager.getLogger();
     @Autowired
     private DefaultController expenseControllerDefault;
+
+    @Autowired
+    private DefaultController partnerControllerDefault;
 
     /**
      * @param stub
@@ -109,21 +110,16 @@ public class ExpenseControllerImpl implements ExpenseController {
     }
 
     @Override
-    @GetMapping(params = "docId")
     public ResponseEntity<ExpenseStub> getById(@RequestParam("docId") final @NotBlank String docId)
             throws ServiceException {
+        log.info("docId id is " + docId);
         return ResponseEntity.ok(converter().from(service().findyByDocId(docId)));
     }
 
     @Override
-    @GetMapping(path = "/{id}/partner")
-    public ResponseEntity<ExpenseStub> getPartner(@PathVariable("id") final Long id,
-            @RequestHeader(HttpHeaders.AUTHORIZATION) final String authToken) throws ServiceException {
+    public ResponseEntity<?> getPartner(@PathVariable("id") final Long id) throws ServiceException {
         Long partnerId = service().findById(id).getParty().getId();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ServletUriComponentsBuilder.fromCurrentContextPath().path("/partner/{id}")
-                .buildAndExpand(partnerId).toUri());
-        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).headers(headers).build();
+        return partnerControllerDefault.findResourceById(partnerId);
     }
 
 

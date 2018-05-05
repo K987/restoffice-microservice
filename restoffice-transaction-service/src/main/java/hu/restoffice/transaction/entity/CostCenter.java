@@ -22,7 +22,7 @@ public class CostCenter implements Serializable, Identity {
     private static final long serialVersionUID = 7273878052560094915L;
 
     @Id
-    @SequenceGenerator(name = "COST_CENTERS_COSTCENTERID_GENERATOR", sequenceName = "COST_CENTERS_COST_CENTER_ID_SEQ")
+    @SequenceGenerator(name = "COST_CENTERS_COSTCENTERID_GENERATOR", sequenceName = "COST_CENTERS_COST_CENTER_ID_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COST_CENTERS_COSTCENTERID_GENERATOR")
     @Column(name = "cost_center_id")
     private Long id;

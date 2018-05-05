@@ -28,4 +28,7 @@ public interface CostCenterController extends CRUDController<CostCenterStub> {
     @GetMapping(params = "name")
     ResponseEntity<CostCenterStub> findByName(@RequestParam("name") String name) throws ServiceException;
 
+
 }
+
+

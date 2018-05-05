@@ -57,6 +57,9 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
             case NOT_EXISTS:
                 status = HttpStatus.NOT_FOUND;
                 break;
+            case UNSUPPORTED:
+                status = HttpStatus.METHOD_NOT_ALLOWED;
+                break;
             case UNKNOWN:
             default:
                 status = HttpStatus.INTERNAL_SERVER_ERROR;

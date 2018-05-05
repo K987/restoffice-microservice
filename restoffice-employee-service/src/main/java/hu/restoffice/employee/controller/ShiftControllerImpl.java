@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hu.restoffice.commons.error.ServiceException;
 import hu.restoffice.commons.web.DefaultController;
-import hu.restoffice.employee.converter.EmployeeShiftConverterService;
+import hu.restoffice.employee.converter.ShiftConverterService;
 import hu.restoffice.employee.domain.ShiftStub;
 import hu.restoffice.employee.service.ShiftService;
 
@@ -22,7 +22,7 @@ import hu.restoffice.employee.service.ShiftService;
  *
  */
 @RestController
-@RequestMapping(path = "/employee/shift", produces = MediaType.APPLICATION_JSON)
+@RequestMapping(path = "/shift", produces = MediaType.APPLICATION_JSON)
 public class ShiftControllerImpl implements ShiftController {
 
     @Resource
@@ -64,8 +64,8 @@ public class ShiftControllerImpl implements ShiftController {
      * @return
      * @see hu.restoffice.commons.web.DefaultController#getConverter()
      */
-    public EmployeeShiftConverterService converter() {
-        return (EmployeeShiftConverterService) shiftDefaultController.getConverter();
+    public ShiftConverterService converter() {
+        return (ShiftConverterService) shiftDefaultController.getConverter();
     }
 
     /**

@@ -2,6 +2,8 @@ package hu.restoffice.transaction.service;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import hu.restoffice.commons.error.ServiceException;
@@ -17,6 +19,7 @@ import hu.restoffice.transaction.repository.IncomeTypeRepository;
 public class IncomeTypeServiceImpl extends AbstractCRUDService<IncomeType, IncomeTypeRepository>
 implements IncomeTypeService {
 
+    private static final Logger log = LogManager.getLogger();
 
     /*
      * (non-Javadoc)
@@ -80,8 +83,7 @@ implements IncomeTypeService {
      */
     @Override
     protected boolean isDeletable(final Long id) throws ServiceException {
-        // TODO Auto-generated method stub
-        return !repo.findByIdIfHasRelatedIncomes(id).isPresent();
+        return repo.findByIdIfHasRelatedIncomes(id).isPresent();
     }
 
 }

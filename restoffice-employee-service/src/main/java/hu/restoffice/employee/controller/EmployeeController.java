@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,9 +27,9 @@ public interface EmployeeController extends CRUDController<EmployeeStub> {
      * @return
      * @throws ServiceException
      */
-    @GetMapping(path = "/{id}", params = { "from-date, to-date" })
+    @GetMapping(path = "/{id}/schedule", params = { "from-date", "to-date" })
     ResponseEntity<?> getEmployeeResourceScheduleBetweenDates(@PathVariable("id") Long empId,
-            @RequestParam("from-date") @NotNull LocalDate from,
-            @RequestParam("to-date") @NotNull LocalDate to) throws ServiceException;
+            @RequestParam("from-date") @NotNull @DateTimeFormat(iso = ISO.DATE) LocalDate from,
+            @RequestParam("to-date") @NotNull @DateTimeFormat(iso = ISO.DATE) LocalDate to) throws ServiceException;
 
 }

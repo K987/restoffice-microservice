@@ -8,6 +8,9 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.MediaType;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,8 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 import hu.restoffice.commons.error.ServiceException;
 import hu.restoffice.commons.web.DefaultController;
 import hu.restoffice.employee.converter.EmployeeConverterService;
+import hu.restoffice.employee.converter.ShiftConverterService;
 import hu.restoffice.employee.domain.EmployeeStub;
 import hu.restoffice.employee.service.EmployeeService;
+import hu.restoffice.employee.service.ShiftService;
 
 /**
  *
@@ -30,6 +35,12 @@ public class EmployeeControllerImpl implements EmployeeController {
 
     @Resource
     private DefaultController employeeDefaultController;
+
+    @Autowired
+    private ShiftService shiftService;
+
+    @Autowired
+    private ShiftConverterService shiftConverterService;
 
     /**
      * @param id
@@ -67,7 +78,7 @@ public class EmployeeControllerImpl implements EmployeeController {
      * @return
      * @see hu.restoffice.commons.web.DefaultController#getConverter()
      */
-    public EmployeeConverterService getConverter() {
+    public EmployeeConverterService converter() {
         return (EmployeeConverterService) employeeDefaultController.getConverter();
     }
 
@@ -75,7 +86,7 @@ public class EmployeeControllerImpl implements EmployeeController {
      * @return
      * @see hu.restoffice.commons.web.DefaultController#getService()
      */
-    public EmployeeService getService() {
+    public EmployeeService service() {
         return (EmployeeService) employeeDefaultController.getService();
     }
 
@@ -103,11 +114,11 @@ public class EmployeeControllerImpl implements EmployeeController {
 
     @Override
     public ResponseEntity<?> getEmployeeResourceScheduleBetweenDates(@PathVariable("id") final Long empId,
-            @RequestParam("from-date") @NotNull final LocalDate from,
-            @RequestParam("to-date") @NotNull final LocalDate to)
+            @RequestParam("from-date") @NotNull @DateTimeFormat(iso = ISO.DATE) final LocalDate from,
+            @RequestParam("to-date") @NotNull @DateTimeFormat(iso = ISO.DATE) final LocalDate to)
                     throws ServiceException {
-        // TODO: redirektelni a shift controller egy szolgáltatásához
-        return null;
+        return ResponseEntity.ok(shiftConverterService.from(shiftService.getEmployeeSchedule(empId, from, to)));
+
     }
 
 }

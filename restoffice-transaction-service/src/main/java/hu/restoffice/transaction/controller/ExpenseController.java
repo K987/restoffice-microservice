@@ -2,11 +2,9 @@ package hu.restoffice.transaction.controller;
 
 import javax.validation.constraints.NotBlank;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import hu.restoffice.commons.error.ServiceException;
@@ -25,8 +23,7 @@ public interface ExpenseController extends CRUDController<ExpenseStub> {
      * @throws ServiceException
      */
     @GetMapping(path = "/{id}/partner")
-    ResponseEntity<ExpenseStub> getPartner(@PathVariable("id") final Long id,
-            @RequestHeader(HttpHeaders.AUTHORIZATION) final String authToken) throws ServiceException;
+    public ResponseEntity<?> getPartner(@PathVariable("id") final Long id) throws ServiceException;
 
     /**
      * @param docId

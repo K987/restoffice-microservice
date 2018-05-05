@@ -39,7 +39,7 @@ public class RestofficeEmployeeServiceApplication {
     }
 
     @Bean
-    public DefaultController ShiftDefaultController(final ShiftService s, final ShiftConverterService c) {
+    public DefaultController shiftDefaultController(final ShiftService s, final ShiftConverterService c) {
         return new DefaultController(s, c);
     }
 }

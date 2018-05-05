@@ -42,8 +42,15 @@ implements ShiftService {
      */
     @Override
     protected void updateFields(final Shift old, final Shift entity) {
-        old.getDuration();
-        old.getStartDateTime();
+        Double d = entity.getDuration();
+        if (d != null) {
+            old.setDuration(d);
+        }
+        Timestamp st = entity.getStartDateTime();
+        if (st != null) {
+            old.setStartDateTime(st);
+        }
+
     }
 
     /*
@@ -72,6 +79,7 @@ implements ShiftService {
         Timestamp toTT = Timestamp.valueOf(LocalDateTime.of(to, LocalTime.of(23, 59, 59)));
         try {
             return repo.getScheduleBetween(fromTt, toTT, empId);
+
         } catch (Exception e) {
             throw new ServiceException(Type.UNKNOWN, e.getMessage());
         }

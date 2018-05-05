@@ -15,6 +15,7 @@ import hu.restoffice.commons.service.AbstractCRUDService;
 import hu.restoffice.transaction.domain.DocumentType;
 import hu.restoffice.transaction.domain.PaymentMethod;
 import hu.restoffice.transaction.entity.AccountingPeriod;
+import hu.restoffice.transaction.entity.CostCenter;
 import hu.restoffice.transaction.entity.Expense;
 import hu.restoffice.transaction.entity.ExpenseType;
 import hu.restoffice.transaction.entity.Partner;
@@ -31,6 +32,9 @@ public class ExpenseServiceImpl extends AbstractCRUDService<Expense, ExpenseRepo
 
     @Autowired
     private PartnerService partnerService;
+
+    @Autowired
+    private CostCenterService costCenterService;
 
     /* (non-Javadoc)
      * @see hu.restoffice.transaction.service.ExpenseSerivce#add(hu.restoffice.transaction.entity.Expense)
@@ -73,8 +77,10 @@ public class ExpenseServiceImpl extends AbstractCRUDService<Expense, ExpenseRepo
     private void setRelations(final Expense entity) throws ServiceException {
         ExpenseType incType = expenseTypeService.findByName(entity.getExpType().getName());
         Partner partner = partnerService.findByName(entity.getParty().getName());
+        CostCenter cc = costCenterService.findByName(entity.getCostCenter().getName());
         entity.setExpType(incType);
         entity.setParty(partner);
+        entity.setCostCenter(cc);
     }
     /*
      * (non-Javadoc)

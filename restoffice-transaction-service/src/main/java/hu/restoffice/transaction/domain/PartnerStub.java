@@ -3,7 +3,6 @@ package hu.restoffice.transaction.domain;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -21,7 +20,6 @@ public class PartnerStub {
     private String account;
     @JsonProperty
     private String contactName;
-    @Pattern(regexp = "^\\\\(?(\\\\d{2})\\\\)?[- ]?(\\\\d{3})[- ]?(\\\\d{4})$", message = "invalid phone number")
     @JsonProperty
     private String contactPhone;
     @Email(message = "invalid email address")
