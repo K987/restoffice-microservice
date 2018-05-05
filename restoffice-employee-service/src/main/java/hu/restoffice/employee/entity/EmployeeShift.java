@@ -110,8 +110,10 @@ public class EmployeeShift implements Serializable, Identity {
     }
 
     public void setEmployee(final Employee employee) {
-        this.employee = employee;
-        employee.addEmployeeShift(this);
+        if (this.employee != employee) {
+            this.employee = employee;
+            employee.addEmployeeShift(this);
+        }
     }
 
     public Shift getShift() {
@@ -119,8 +121,10 @@ public class EmployeeShift implements Serializable, Identity {
     }
 
     public void setShift(final Shift shift) {
-        this.shift = shift;
-        shift.addEmployeeShift(this);
+        if (this.shift != shift) {
+            this.shift = shift;
+            shift.addEmployeeShift(this);
+        }
     }
 
     /**
@@ -140,6 +144,22 @@ public class EmployeeShift implements Serializable, Identity {
         return "EmployeeShift [id=" + id + ", employee exists =" + (employee == null) + ", shift exsits="
                 + (shift == null) + ", actualStart=" + actualStart + ", actualEnd=" + actualEnd + ", actualPosition="
                 + actualPosition + "]";
+    }
+
+    /**
+     * @param e
+     */
+    public void initEmployee(final Employee e) {
+        if (employee == null)
+            employee = e;
+    }
+
+    /**
+     * @param s
+     */
+    public void initShift(final Shift s) {
+        if (shift == null)
+            shift = s;
     }
 
 }

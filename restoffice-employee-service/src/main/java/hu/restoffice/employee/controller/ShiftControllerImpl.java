@@ -1,9 +1,11 @@
 package hu.restoffice.employee.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.http.ResponseEntity;
@@ -97,6 +99,19 @@ public class ShiftControllerImpl implements ShiftController {
             @RequestBody final ShiftStub arg1)
                     throws ServiceException {
         return shiftDefaultController.updateResource(arg0, arg1);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * hu.restoffice.employee.controller.ShiftController#getScheduleBetween(java.
+     * time.LocalDate, java.time.LocalDate)
+     */
+    @Override
+    public ResponseEntity<?> getScheduleBetween(@NotNull final LocalDate from, @NotNull final LocalDate to)
+            throws ServiceException {
+        return ResponseEntity.ok(converter().from(service().getScheduleBetween(from, to)));
     }
 
 }

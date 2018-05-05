@@ -18,6 +18,9 @@ public interface ShiftRepository extends JpaRepository<Shift, Long> {
     @Query("SELECT DISTINCT s FROM Shift s LEFT JOIN FETCH s.employeeShifts es JOIN FETCH es.employee WHERE s.startDateTime BETWEEN :fromDate AND :toDate")
     List<Shift> getScheduleBetween(@Param("fromDate") Timestamp fromDate, @Param("toDate") Timestamp toDate);
 
+    // @Query("SELECT DISTINCT s FROM Shift s LEFT JOIN FETCH s.employeeShifts es
+    // JOIN FETCH es.employee e WHERE s.startDateTime BETWEEN :fromDate AND :toDate
+    // AND e.id = :id")
     @Query("SELECT DISTINCT s FROM Shift s LEFT JOIN FETCH s.employeeShifts es JOIN FETCH es.employee e WHERE s.startDateTime BETWEEN :fromDate AND :toDate AND e.id = :id")
     List<Shift> getScheduleBetween(@Param("fromDate") Timestamp fromDate, @Param("toDate") Timestamp toDate,
             @Param("id") Long empId);

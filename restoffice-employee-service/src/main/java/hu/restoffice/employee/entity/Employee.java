@@ -62,16 +62,18 @@ public class Employee implements Serializable, Identity {
      * @return
      */
     public EmployeeShift addEmployeeShift(final EmployeeShift employeeShift) {
-        getEmployeeShifts().add(employeeShift);
-        employeeShift.setEmployee(this);
-
+        if (!employeeShifts.contains(employeeShift)) {
+            employeeShift.setEmployee(this);
+            employeeShifts.add(employeeShift);
+        }
         return employeeShift;
     }
 
     public EmployeeShift removeEmployeeShift(final EmployeeShift employeeShift) {
-        getEmployeeShifts().remove(employeeShift);
-        employeeShift.setEmployee(null);
-
+        if (employeeShifts.contains(employeeShift)) {
+            employeeShifts.remove(employeeShift);
+            employeeShift.setEmployee(null);
+        }
         return employeeShift;
     }
 
@@ -130,6 +132,41 @@ public class Employee implements Serializable, Identity {
         return "Employee [id=" + id + ", active=" + active + ", defaultHourlyWage=" + defaultHourlyWage
                 + ", defaultPosition=" + defaultPosition + ", name=" + name + ", employeeShifts="
                 + (employeeShifts == null) + "]";
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Employee))
+            return false;
+        Employee other = (Employee) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
     }
 
 }

@@ -72,7 +72,7 @@ implements ShiftService {
      * Long, java.time.LocalDateTime, java.time.LocalDateTime)
      */
     @Override
-    public List<Shift> getEmployeeSchedule(final Long empId, final LocalDate from, final LocalDate to)
+    public List<Shift> getEmployeeScheduleBetween(final Long empId, final LocalDate from, final LocalDate to)
             throws ServiceException {
 
         Timestamp fromTt = Timestamp.valueOf(LocalDateTime.of(from, LocalTime.of(0, 0, 0)));
@@ -86,6 +86,24 @@ implements ShiftService {
 
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.employee.service.ShiftService#getScheduleBetween(java.time.
+     * LocalDate, java.time.LocalDate)
+     */
+    @Override
+    public List<Shift> getScheduleBetween(final LocalDate from, final LocalDate to) throws ServiceException {
+        Timestamp fromTt = Timestamp.valueOf(LocalDateTime.of(from, LocalTime.of(0, 0, 0)));
+        Timestamp toTT = Timestamp.valueOf(LocalDateTime.of(to, LocalTime.of(23, 59, 59)));
+        try {
+            return repo.getScheduleBetween(fromTt, toTT);
+
+        } catch (Exception e) {
+            throw new ServiceException(Type.UNKNOWN, e.getMessage());
+        }
+    }
 
 
 }

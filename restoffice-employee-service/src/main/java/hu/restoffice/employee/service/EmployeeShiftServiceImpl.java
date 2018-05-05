@@ -28,7 +28,9 @@ implements EmployeeShiftService {
     @Autowired
     private EmployeeService employeeService;
 
+
     @Override
+    // TODO: lazy init hibát javítani
     public EmployeeShift add(final EmployeeShift employeeShift, final Long employeeId, final Long shiftId)
             throws ServiceException {
         Employee e = employeeService.findById(employeeId);
@@ -36,13 +38,17 @@ implements EmployeeShiftService {
             Shift s = shiftService.findById(shiftId);
             employeeShift.setEmployee(e);
             employeeShift.setShift(s);
-            return repo.saveAndFlush(employeeShift);
+            if (!checkExistence(employeeShift)) {
+
+                return repo.saveAndFlush(employeeShift);
+            } else {
+                EmployeeShift existing = repo.findByEmployee_IdAndShift_Id(e.getId(), s.getId()).get();
+                throw new ServiceException(Type.ALREADY_EXISTS, "this has been already scheduled",
+                        "employee shift id is :" + existing.getId());
+            }
         } else
             throw new ServiceException(Type.NOT_EXISTS, "employee is not active", e);
     }
-
-    // TODO: updatet valahogy meghekkelni, hogy lehessen módosítani a kapcsolt
-    // entitásokat is
 
     /*
      * (non-Javadoc)
@@ -51,8 +57,7 @@ implements EmployeeShiftService {
      */
     @Override
     public EmployeeShift add(final EmployeeShift entity) throws ServiceException {
-        // TODO: nem támogatott művelet kivétel típus
-        throw new ServiceException(Type.UNKNOWN, "not supported operation, need employee id and shift id");
+        throw new ServiceException(Type.UNSUPPORTED, "not supported operation, need employee id and shift id");
     }
 
 
@@ -64,8 +69,8 @@ implements EmployeeShiftService {
      * Object)
      */
     @Override
-    protected boolean checkExistence(final EmployeeShift entity) {
-        return false;
+    public boolean checkExistence(final EmployeeShift entity) {
+        return repo.findByEmployee_IdAndShift_Id(entity.getEmployee().getId(), entity.getShift().getId()).isPresent();
     }
 
     /*
@@ -110,6 +115,6 @@ implements EmployeeShiftService {
      */
     @Override
     public List<EmployeeShift> findEmployeesUnstartedShifts(final Long id) {
-        return repo.findByActualStartNotNullAndEmployee_Id(id);
+        return repo.findByActualStartNullAndEmployee_Id(id);
     }
 }

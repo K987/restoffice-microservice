@@ -19,5 +19,7 @@ public interface ShiftService extends CRUDService<Shift> {
      * @return
      * @throws ServiceException
      */
-    List<Shift> getEmployeeSchedule(Long empId, LocalDate from, LocalDate to) throws ServiceException;
+    List<Shift> getEmployeeScheduleBetween(Long empId, LocalDate from, LocalDate to) throws ServiceException;
+
+    List<Shift> getScheduleBetween(LocalDate from, LocalDate to) throws ServiceException;
 }

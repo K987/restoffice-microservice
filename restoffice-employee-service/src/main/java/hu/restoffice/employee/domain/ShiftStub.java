@@ -1,7 +1,9 @@
 package hu.restoffice.employee.domain;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -19,11 +21,14 @@ public class ShiftStub {
     @JsonProperty
     private Long id;
     @JsonProperty
+    @NotNull
     private Double duration;
     @JsonProperty
-    private LocalDateTime startDateTime;
+    @NotNull
+    private LocalDate startDate;
     @JsonProperty
-    private List<EmployeeShiftStub> employeeShifts;
+    @NotNull
+    private LocalTime startTime;
 
     public ShiftStub() {
 
@@ -35,13 +40,12 @@ public class ShiftStub {
      * @param startDateTime
      * @param employeeShifts
      */
-    public ShiftStub(final Long id, final Double duration, final LocalDateTime startDateTime,
-            final List<EmployeeShiftStub> employeeShifts) {
+    public ShiftStub(final Long id, final Double duration, final LocalDate startDate, final LocalTime startTime) {
         super();
         this.id = id;
         this.duration = duration;
-        this.startDateTime = startDateTime;
-        this.employeeShifts = employeeShifts;
+        this.startDate = startDate;
+        this.startTime = startTime;
     }
 
     /**
@@ -59,17 +63,17 @@ public class ShiftStub {
     }
 
     /**
-     * @return the startDateTime
+     * @return the startDate
      */
-    public LocalDateTime getStartDateTime() {
-        return startDateTime;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
     /**
-     * @return the employeeShifts
+     * @return the startTime
      */
-    public List<EmployeeShiftStub> getEmployeeShifts() {
-        return employeeShifts;
+    public LocalTime getStartTime() {
+        return startTime;
     }
 
     /*
@@ -79,8 +83,7 @@ public class ShiftStub {
      */
     @Override
     public String toString() {
-        return "ShiftStub [id=" + id + ", duration=" + duration + ", startDateTime=" + startDateTime
-                + ", employeeShifts=" + employeeShifts + "]";
+        return "ShiftStub [id=" + id + ", duration=" + duration + ", startDate=" + startDate + ", startTime="
+                + startTime + "]";
     }
-
 }

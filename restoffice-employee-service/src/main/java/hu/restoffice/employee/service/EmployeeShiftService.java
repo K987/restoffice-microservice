@@ -27,4 +27,10 @@ public interface EmployeeShiftService extends CRUDService<EmployeeShift> {
      */
     EmployeeShift add(EmployeeShift employeeShift, Long employeeId, Long shiftId) throws ServiceException;
 
+    /**
+     * @param entity
+     * @return
+     */
+    boolean checkExistence(EmployeeShift entity);
+
 }

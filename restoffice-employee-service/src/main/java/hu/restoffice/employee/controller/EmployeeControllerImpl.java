@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import hu.restoffice.commons.error.ServiceException;
 import hu.restoffice.commons.web.DefaultController;
 import hu.restoffice.employee.converter.EmployeeConverterService;
 import hu.restoffice.employee.converter.ShiftConverterService;
 import hu.restoffice.employee.domain.EmployeeStub;
+import hu.restoffice.employee.entity.Shift;
 import hu.restoffice.employee.service.EmployeeService;
 import hu.restoffice.employee.service.ShiftService;
 
@@ -117,7 +119,25 @@ public class EmployeeControllerImpl implements EmployeeController {
             @RequestParam("from-date") @NotNull @DateTimeFormat(iso = ISO.DATE) final LocalDate from,
             @RequestParam("to-date") @NotNull @DateTimeFormat(iso = ISO.DATE) final LocalDate to)
                     throws ServiceException {
-        return ResponseEntity.ok(shiftConverterService.from(shiftService.getEmployeeSchedule(empId, from, to)));
+        List<Shift> shifts = shiftService.getEmployeeScheduleBetween(empId, from, to);
+        shifts.sort((o1, o2) -> o1.getStartDate().compareTo(o2.getStartDate()));
+        return ResponseEntity.ok(shiftConverterService.from(shifts));
+
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.employee.controller.EmployeeController#addEmployeeToShift(java.
+     * lang.Long, java.lang.Long)
+     */
+    @Override
+    public ResponseEntity<?> addEmployeeToShift(@PathVariable("empId") final Long empId,
+            @PathVariable("shiftId") final Long shiftId) throws ServiceException {
+        Long id = service().addEmployeToShift(empId, shiftId);
+        return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentContextPath().path("/employee/shift/{id}")
+                .buildAndExpand(id).toUri()).build();
 
     }
 
