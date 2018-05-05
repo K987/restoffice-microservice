@@ -32,7 +32,7 @@ public class RegisterClose implements Serializable, Identity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "REGISTER_CLOSES_REGISTER_CLOSE_ID_GENERATOR")
     private Long id;
 
-    @Column(name = "register_close_no", unique = true, nullable = false)
+    @Column(name = "register_close_no", nullable = false)
     private Long closeNo;
 
     @Column(name = "register_close_amt", precision = 131089)
@@ -88,7 +88,7 @@ public class RegisterClose implements Serializable, Identity {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
