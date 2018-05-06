@@ -15,3 +15,7 @@ zuul:
       path: /config/**
       service-id: restoffice-config-server
       strip-prefix: true
+    restoffice-cashregister-service:
+      path: /cash-register/**
+      service-id: restoffice-cashregister-service
+      strip-prefix: true
