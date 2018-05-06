@@ -4,3 +4,7 @@ eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
+  server:
+    number-of-replication-retries: 0
+  dashboard:
+    path: /dashboard

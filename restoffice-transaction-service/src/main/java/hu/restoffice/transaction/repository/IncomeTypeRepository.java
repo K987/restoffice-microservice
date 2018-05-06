@@ -22,6 +22,6 @@ public interface IncomeTypeRepository extends JpaRepository<IncomeType, Long> {
      * @param id
      * @return
      */
-    @Query("select t from IncomeType t join fetch t.incomes i where t.id = :id and t.incomes is empty")
+    @Query("select t from IncomeType t left join fetch t.incomes i where t.id = :id and t.incomes is empty")
     Optional<IncomeType> findByIdIfHasRelatedIncomes(@Param("id") Long id);
 }

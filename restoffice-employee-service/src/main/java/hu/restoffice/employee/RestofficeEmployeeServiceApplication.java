@@ -2,6 +2,7 @@ package hu.restoffice.employee;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
@@ -16,6 +17,7 @@ import hu.restoffice.employee.service.ShiftService;
 
 @ComponentScan("hu.restoffice")
 @SpringBootApplication
+@EnableEurekaClient
 public class RestofficeEmployeeServiceApplication {
 
     public static void main(final String[] args) {

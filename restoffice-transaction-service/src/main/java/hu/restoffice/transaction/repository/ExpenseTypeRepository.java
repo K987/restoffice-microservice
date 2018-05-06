@@ -22,7 +22,7 @@ public interface ExpenseTypeRepository extends JpaRepository<ExpenseType, Long> 
      * @param id
      * @return
      */
-    @Query("select t from ExpenseType t join fetch t.expenses e where t.id = :id and t.expenses is empty")
+    @Query("select t from ExpenseType t left join fetch t.expenses e where t.id = :id and t.expenses is empty")
     Optional<ExpenseType> findIfHasExpenesesRelated(@Param("id") Long id);
 
 }

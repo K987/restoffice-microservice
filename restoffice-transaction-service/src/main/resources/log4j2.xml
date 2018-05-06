@@ -21,7 +21,7 @@
 		</RollingFile>
 	</Appenders>
 	<Loggers>
-		<Logger name="hu.restoffice" level="info" additivity="false">
+		<Logger name="hu.restoffice" level="info" additivity="true">
 			<AppenderRef ref="FileAppender" />
 		</Logger>
 		<Root level="info">

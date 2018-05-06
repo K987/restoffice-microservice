@@ -54,11 +54,11 @@ public class RegisterConverterServiceImpl implements RegisterConverterService {
      */
     private List<RegisterCloseStub> fromRegisterClose(final Register register) {
         if (!Hibernate.isInitialized(register.getRegisterCloses()) || register.getRegisterCloses() == null) {
-            log.info("i am not inited");
+            log.info("register close not inited");
             return new ArrayList<>();
         }
         else {
-            log.info("i am inited");
+            log.info("register close inited");
             return registerCloseConverter.from(new ArrayList<>(register.getRegisterCloses()));
         }
 

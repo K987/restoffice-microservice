@@ -24,7 +24,7 @@ public interface RegisterRepository extends JpaRepository<Register, Long> {
     List<RegisterClose> findRegisterClosesByRegisterId(@Param("id") Long id);
 
     @Override
-    @Query("select r from Register r join fetch r.registerCloses c where r.id = :id")
+    @Query("select r from Register r left join fetch r.registerCloses c where r.id = :id")
     Optional<Register> findById(@Param("id") Long id);
 
     /**
