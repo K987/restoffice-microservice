@@ -19,3 +19,6 @@ zuul:
       path: /cash-register/**
       service-id: restoffice-cashregister-service
       strip-prefix: true
+restoffice:
+  auth-endpoint:
+    url: /api/auth/oauth/token
