@@ -25,3 +25,5 @@ zuul:
 restoffice:
   auth-endpoint:
     url: /api/auth/oauth/token
+  correlation-filter:
+    enable: true
