@@ -1,3 +1,6 @@
+info:
+  app:
+    message: Hello Gateway from config server!
 zuul:
   ignored-services: '*'
   sensitiveHeaders:
