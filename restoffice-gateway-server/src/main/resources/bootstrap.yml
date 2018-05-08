@@ -1,3 +1,6 @@
+info:
+  app:
+    message: Hello Gateway from bootstrap!
 server:
   port: 8080
 spring:
@@ -20,4 +23,5 @@ eureka:
 #    register-with-eureka: true
 #    enabled: true
 #hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds=60000
+      
       
