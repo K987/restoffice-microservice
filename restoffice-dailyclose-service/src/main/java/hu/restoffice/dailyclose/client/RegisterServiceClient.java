@@ -10,14 +10,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import hu.restoffice.dailyclose.domain.RegisterCloseStub;
+import hu.restoffice.dailyclose.domain.RegisterStub;
+
 /**
  *
  */
 @FeignClient("restoffice-cashregister-service")
-public interface CashRegisterCloseClient {
+public interface RegisterServiceClient {
 
     @GetMapping(path = "/register-close", params = { "fromDate", "toDate" })
-    ResponseEntity<List<?>> findResourceByDate(
+    ResponseEntity<List<RegisterCloseStub>> findClosesesBetweenDate(
             @RequestParam("fromDate") @DateTimeFormat(iso = ISO.DATE) final LocalDate from,
             @RequestParam("toDate") @DateTimeFormat(iso = ISO.DATE) LocalDate to);
+
+    @GetMapping(path="/register")
+    ResponseEntity<List<RegisterStub>> getRegisters();
 }

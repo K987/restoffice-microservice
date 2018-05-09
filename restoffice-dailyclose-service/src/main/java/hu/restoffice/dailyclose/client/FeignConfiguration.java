@@ -1,5 +1,6 @@
 package hu.restoffice.dailyclose.client;
 
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignFormatterRegistrar;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import feign.RequestInterceptor;
  */
 @Configuration
 @EnableOAuth2Client
+@EnableFeignClients
 public class FeignConfiguration {
 
     @Bean
@@ -22,7 +24,7 @@ public class FeignConfiguration {
     }
 
     @Bean
-    public FeignFormatterRegistrar fdfs() {
+    public FeignFormatterRegistrar IsoDateTimeFormatter() {
         return new FeignFormatterRegistrar() {
 
             @Override
