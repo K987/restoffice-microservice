@@ -43,7 +43,7 @@ public class GatewayJwtAuthorization extends ResourceServerConfigurerAdapter {
      */
     @Override
     public void configure(final HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers(properties.getTokenPath()).permitAll().antMatchers("/**").authenticated()
+        http.authorizeRequests().antMatchers(properties.getTokenPath()).permitAll().antMatchers("/daily-close").authenticated()
         .and().csrf()
         .disable();
     }
