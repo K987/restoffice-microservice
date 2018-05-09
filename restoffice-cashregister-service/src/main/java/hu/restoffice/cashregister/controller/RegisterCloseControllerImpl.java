@@ -8,6 +8,8 @@ import javax.validation.constraints.Digits;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
@@ -126,11 +128,12 @@ public class RegisterCloseControllerImpl implements RegisterCloseController {
      * findResourceByDate(java.time.LocalDate, java.time.LocalDate)
      */
     @Override
-    public ResponseEntity<List<?>> findResourceByDate(@RequestParam("fromDate") final LocalDate from,
-            @RequestParam("toDate") final LocalDate to)
+    public ResponseEntity<List<?>> findResourceByDate(
+            @RequestParam("fromDate") @DateTimeFormat(iso = ISO.DATE) final LocalDate from,
+            @RequestParam("toDate") @DateTimeFormat(iso = ISO.DATE) final LocalDate to)
                     throws ServiceException {
         List<RegisterClose> rtrn;
-        if (to != null)
+        if (to == null)
             rtrn = service().getClosesByDate(from);
         else
             rtrn = service().getClosesBetweenDate(from, to);
