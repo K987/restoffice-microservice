@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: restoffice-dailyclose-service
+  profiles:
+    active:
+    - development
+  jpa:
+    open-in-view: false
+---
+server:
+  port: 8088
+spring:
+  profiles: development
+#  jpa:
+#    show-sql: true
+#  cloud:
+#    config:
+#      enabled: false
+#    bus:
+#      enabled: false
+#eureka:
+#  client:
+#    enabled: false
+#aspect:
+#  logging:
+#    component:
+#      enabled: true
