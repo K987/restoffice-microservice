@@ -1,28 +1,43 @@
-message: Hello Bootstrap
+message: Hello from local bootsrap!
 spring:
   application:
     name: restoffice-dailyclose-service
   profiles:
     active:
-    - development
+    - test
   jpa:
     open-in-view: false
 ---
 server:
-  port: 8088
+  port: 8080
 spring:
   profiles: development
-#  jpa:
-#    show-sql: true
-#  cloud:
-#    config:
-#      enabled: false
-#    bus:
-#      enabled: false
-#eureka:
-#  client:
-#    enabled: false
-#aspect:
-#  logging:
-#    component:
-#      enabled: true
+  jpa:
+    show-sql: true
+  cloud:
+    config:
+      enabled: false
+    bus:
+      enabled: false
+eureka:
+  client:
+    enabled: false
+aspect:
+  logging:
+    component:
+      enabled: true
+---
+server:
+  port: 0
+spring:
+  profiles: test
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: restoffice-config-server
+      fail-fast: true
+
+eureka:
+  client:
+    fetch-registry: true

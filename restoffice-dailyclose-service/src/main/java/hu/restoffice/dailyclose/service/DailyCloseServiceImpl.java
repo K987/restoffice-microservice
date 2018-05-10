@@ -1,6 +1,7 @@
 package hu.restoffice.dailyclose.service;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +21,10 @@ import hu.restoffice.dailyclose.domain.RegisterCloseStub;
 import hu.restoffice.dailyclose.domain.RegisterDailyCloseStub;
 import hu.restoffice.dailyclose.domain.RegisterStub;
 import hu.restoffice.dailyclose.domain.RegisterType;
+import hu.restoffice.dailyclose.entity.DailyClose;
+import hu.restoffice.dailyclose.entity.RegisterDailyClose;
+import hu.restoffice.dailyclose.repository.DailyCloseRepository;
+import hu.restoffice.dailyclose.repository.RegisterDailyCloseRepository;
 
 /**
  *
@@ -32,11 +37,18 @@ public class DailyCloseServiceImpl {
     @Autowired
     RegisterServiceClient registerClient;
 
-    public Long startDailyClose(final LocalDate dt) throws ServiceException{
-        // TODO: ellenőtizni, hogy a dátum létezik-e már, ha nem létrehozni a bejegyzést
-        // és lezárni
-        if (dt.isEqual(LocalDate.of(2018, 05, 10))) {
-            return 1l;
+    @Autowired
+    private DailyCloseRepository dailyCloseRepo;
+
+    @Autowired
+    private RegisterDailyCloseRepository registerDailyCloseRpo;
+
+    public Long startDailyClose(final LocalDate dt) throws ServiceException {
+        if (!dailyCloseRepo.findByCloseDate(Date.valueOf(dt)).isPresent()) {
+            DailyClose dc = new DailyClose();
+            dc.setCloseDate(Date.valueOf(dt));
+            return dailyCloseRepo.saveAndFlush(dc).getId();
+
         } else {
             throw new ServiceException(Type.ALREADY_EXISTS, "day already closed", dt);
         }
@@ -44,20 +56,24 @@ public class DailyCloseServiceImpl {
 
     @SuppressWarnings("unchecked")
     public List<RegisterDailyCloseStub> closeRegisters(final Long id) throws ServiceException {
-        // TODO: id létezik-e már, ha igen elkérni a dátumot és azzal meghívni a feign
-        // klienst
-        log.info("in service method: " + id);
-        if (id == 1) {
-
-            List<RegisterCloseStub> closes = registerClient
-                    .findClosesesBetweenDate(LocalDate.of(2018, 05, 15), LocalDate.of(2018, 05, 15)).getBody();
-            // TODO: throw exception if empty
-            List<RegisterStub> registers = registerClient.getRegisters().getBody();
-            // TODO:persist
-            return aggregateRegisterCloses(closes, registers);
-        } else {
-            throw new ServiceException(Type.NOT_EXISTS, "ilyen zárás még nem létezik, id");
+        DailyClose dc = dailyCloseRepo.findById(id)
+                .orElseThrow(() -> new ServiceException(Type.NOT_EXISTS, "daily close not yet started", id));
+        List<RegisterCloseStub> closes = registerClient
+                .findClosesesBetweenDate(dc.getCloseDate().toLocalDate(), dc.getCloseDate().toLocalDate()).getBody();
+        if (closes == null || closes.size() == 0) {
+            throw new ServiceException(Type.NOT_EXISTS, "registers not closed", dc.getCloseDate().toLocalDate());
         }
+        List<RegisterStub> registers = registerClient.getRegisters().getBody();
+        List<RegisterDailyCloseStub> dailyCloses = aggregateRegisterCloses(closes, registers);
+        for (RegisterDailyCloseStub registerDailyCloseStub : dailyCloses) {
+            RegisterDailyClose c = new RegisterDailyClose();
+            c.setDailyClose(dc);
+            c.setType(registerDailyCloseStub.getType());
+            c.setCloseTotal(registerDailyCloseStub.getCloseTotal());
+            registerDailyCloseRpo.saveAndFlush(c);
+        }
+        return dailyCloses;
+
     }
 
     public Long addShiftClose(final EmployeeShiftCloseStub stub) throws ServiceException {
@@ -81,9 +97,7 @@ public class DailyCloseServiceImpl {
 
         for (RegisterCloseStub close : closes) {
             RegisterType type = registers.stream()
-                    .filter(r -> r.getRegistrationNo().equals(close.getRegisterRegistrationNo()))
-                    .findFirst()
-                    .get()
+                    .filter(r -> r.getRegistrationNo().equals(close.getRegisterRegistrationNo())).findFirst().get()
                     .getRegisterType();
             groups.get(type).add(close.getClosingAmount());
         }
