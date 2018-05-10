@@ -12,8 +12,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hu.restoffice.dailyclose.ServiceException;
-import hu.restoffice.dailyclose.ServiceException.Type;
+import hu.restoffice.commons.error.ServiceException;
+import hu.restoffice.commons.error.ServiceException.Type;
 import hu.restoffice.dailyclose.client.RegisterServiceClient;
 import hu.restoffice.dailyclose.domain.EmployeeShiftCloseStub;
 import hu.restoffice.dailyclose.domain.RegisterCloseStub;
@@ -62,6 +62,7 @@ public class DailyCloseServiceImpl {
 
     public Long addShiftClose(final EmployeeShiftCloseStub stub) throws ServiceException {
 
+        return null;
     }
 
     /**
