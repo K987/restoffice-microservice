@@ -26,6 +26,10 @@ zuul:
       path: /daily-close/**
       service-id: restoffice-cashregister-service
       strip-prefix: true
+    restoffice-employee-service:
+      path: /employee/**
+      service-id: restoffice-employee-service
+      strip-prefix: true
 restoffice:
   auth-endpoint:
     url: /api/auth/oauth/token
