@@ -1,0 +1,33 @@
+info:
+  app:
+    message: Hello Gateway from config server!
+zuul:
+  ignored-services: '*'
+  sensitiveHeaders: Cookie, Set-Cookie
+  prefix: /api
+  routes:
+    restoffice-transaction-service:
+      path: /transaction/**
+      service-id: restoffice-transaction-service
+      strip-prefix: true
+    restoffice-authorization-server:
+      path: /auth/**
+      service-id: restoffice-authorization-server
+      strip-prefix: true
+    restoffice-config-server:
+      path: /config/**
+      service-id: restoffice-config-server
+      strip-prefix: true
+    restoffice-cashregister-service:
+      path: /cash-register/**
+      service-id: restoffice-cashregister-service
+      strip-prefix: true
+    restoffice-dailyclose-service:
+      path: /daily-close/**
+      service-id: restoffice-cashregister-service
+      strip-prefix: true
+restoffice:
+  auth-endpoint:
+    url: /api/auth/oauth/token
+  correlation-filter:
+    enable: true
