@@ -24,7 +24,7 @@ zuul:
       strip-prefix: true
     restoffice-dailyclose-service:
       path: /daily-close/**
-      service-id: restoffice-cashregister-service
+      service-id: restoffice-dailyclose-service
       strip-prefix: true
     restoffice-employee-service:
       path: /employee/**
