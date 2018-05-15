@@ -44,10 +44,10 @@ public class DailyClose implements Serializable, Identity {
     @Column(name = "daily_close_cash_total")
     private BigDecimal cashTotal;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "dailyClose")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "dailyClose")
     private Set<RegisterDailyClose> registerDailyCloses;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "dailyClose")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "dailyClose")
     private Set<ShiftDailyClose> shiftDailyCloses;
 
     /**

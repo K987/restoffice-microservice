@@ -5,8 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import hu.restoffice.commons.web.DefaultController;
@@ -26,8 +24,6 @@ import hu.restoffice.transaction.service.PartnerService;
 @ComponentScan("hu.restoffice")
 @SpringBootApplication
 @EnableEurekaClient
-@EnableResourceServer
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class RestofficeTransactionServiceApplication {
 
     public static void main(final String[] args) {

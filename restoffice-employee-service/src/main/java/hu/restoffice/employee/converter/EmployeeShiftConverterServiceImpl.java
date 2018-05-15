@@ -1,8 +1,10 @@
 package hu.restoffice.employee.converter;
 
 import java.sql.Timestamp;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
 
 import org.hibernate.Hibernate;
@@ -41,20 +43,20 @@ public class EmployeeShiftConverterServiceImpl implements EmployeeShiftConverter
         }
 
         LocalDate startDate = null;
-        LocalDate startTime = null;
+        LocalTime startTime = null;
         Double shfiftLength = null;
         Long shiftId = null;
         if (Hibernate.isInitialized(entity.getShift()) && entity.getShift() != null) {
             startDate = entity.getShift().getStartDate();
-            startTime = entity.getShift().getStartDate();
+            startTime = entity.getShift().getStartTime();
             shfiftLength = entity.getShift().getDuration();
             shiftId = entity.getShift().getId();
         }
+        LocalDateTime actualStart = Optional.ofNullable(entity.getActualStart()).map(s -> s.toLocalDateTime()).orElse(null);
+        LocalDateTime actualEnd = Optional.ofNullable(entity.getActualEnd()).map(s -> s.toLocalDateTime()).orElse(null);
 
-        return null;
-        // initLocalDateTime(entity.getActualStart()),
-        // initLocalDateTime(entity.getActualEnd()),
-        // entity.getHoursWorked(), entity.getActualPosition());
+        return new EmployeeShiftStub(entity.getId(), employeeName, startDate, startTime, shiftId, position, employeeId,
+                actualStart, actualEnd, Duration.ofSeconds(0), entity.getActualPosition());
     }
 
 

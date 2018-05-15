@@ -1,9 +1,12 @@
-package hu.restoffice.dailyclose.domain;
+package hu.restoffice.dailyclose.client;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import hu.restoffice.dailyclose.domain.RegisterCloseStub;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**

@@ -17,7 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import hu.restoffice.commons.entity.Identity;
-import hu.restoffice.dailyclose.domain.RegisterType;
+import hu.restoffice.dailyclose.client.RegisterType;
 
 /**
  *

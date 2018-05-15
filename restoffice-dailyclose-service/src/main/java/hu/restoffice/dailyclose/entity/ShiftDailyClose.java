@@ -155,4 +155,16 @@ public class ShiftDailyClose implements Serializable, Identity {
         return id;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "ShiftDailyClose [id=" + id + ", employeeId=" + employeeId + ", employeeName=" + employeeName
+                + ", posTotal=" + posTotal + ", cardTotal=" + cardTotal + ", cashTotal=" + cashTotal + ", dailyClose="
+                + dailyClose + "]";
+    }
+
 }

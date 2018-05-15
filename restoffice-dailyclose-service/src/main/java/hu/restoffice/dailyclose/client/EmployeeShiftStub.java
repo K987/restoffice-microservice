@@ -1,4 +1,4 @@
-package hu.restoffice.employee.domain;
+package hu.restoffice.dailyclose.client;
 
 import java.time.Duration;
 import java.time.LocalDate;

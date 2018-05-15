@@ -14,9 +14,6 @@ public class ServiceProperties {
     @Value("${spring.application.name}")
     private String serviceName = "";
 
-    @Value("${message}")
-    private String message = "";
-
     @Value("${server.port}")
     private String port;
 
@@ -24,9 +21,6 @@ public class ServiceProperties {
         return serviceName;
     }
 
-    public String getMassage() {
-        return message;
-    }
 
     public String getPort() {
         return port;

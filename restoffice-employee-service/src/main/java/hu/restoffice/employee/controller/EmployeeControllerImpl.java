@@ -136,7 +136,7 @@ public class EmployeeControllerImpl implements EmployeeController {
     public ResponseEntity<?> addEmployeeToShift(@PathVariable("empId") final Long empId,
             @PathVariable("shiftId") final Long shiftId) throws ServiceException {
         Long id = service().addEmployeToShift(empId, shiftId);
-        return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentContextPath().path("/employee/shift/{id}")
+        return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentContextPath().path("/employee-shift/{id}")
                 .buildAndExpand(id).toUri()).build();
 
     }

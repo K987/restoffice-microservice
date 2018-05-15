@@ -1,8 +1,13 @@
 package hu.restoffice.employee.service;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +24,8 @@ import hu.restoffice.employee.repository.EmployeeShiftRepository;
 @Service
 public class EmployeeShiftServiceImpl extends AbstractCRUDService<EmployeeShift, EmployeeShiftRepository>
 implements EmployeeShiftService {
+
+    private static final Logger log = LogManager.getLogger();
 
     @Autowired
     private ShiftService shiftService;
@@ -93,5 +100,26 @@ implements EmployeeShiftService {
     @Override
     public List<EmployeeShift> findEmployeesUnstartedShifts(final Long id) {
         return repo.findByActualStartNullAndEmployee_Id(id);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * hu.restoffice.employee.service.EmployeeShiftService#getScheduledShifts(java.
+     * time.LocalDate)
+     */
+    @Override
+    public List<EmployeeShift> getScheduledShifts(final LocalDate day) throws ServiceException {
+        try {
+            Timestamp start = Timestamp.valueOf(LocalDateTime.of(day, LocalTime.of(0, 01)));
+            Timestamp end = Timestamp.valueOf(LocalDateTime.of(day, LocalTime.of(23, 59)));
+            List<EmployeeShift> rtrn = repo.findByShift_StartDateTimeBetween(start, end);
+            rtrn.forEach(EmployeeShift::getEmployee);
+            log.info(rtrn.size() + ", " + rtrn.get(0));
+            return rtrn;
+        } catch (Exception e) {
+            throw new ServiceException(Type.UNKNOWN, e.getLocalizedMessage());
+        }
     }
 }

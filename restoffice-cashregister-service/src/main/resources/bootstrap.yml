@@ -1,3 +1,6 @@
+info:
+  app:
+    message: Hello CashRegister from bootstrap!
 spring:
   application:
     name: restoffice-cashregister-service
@@ -36,8 +39,4 @@ spring:
         enabled: true
         service-id: restoffice-config-server
       fail-fast: true
-
-eureka:
-  client:
-    fetch-registry: true
     

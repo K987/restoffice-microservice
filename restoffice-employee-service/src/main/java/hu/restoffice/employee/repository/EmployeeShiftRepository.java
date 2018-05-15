@@ -62,4 +62,10 @@ public interface EmployeeShiftRepository extends JpaRepository<EmployeeShift, Lo
     @Query(value = "insert into employee_shifts(employee_shift_employee_id,employee_shift_shift_id) values(:e,:s)", nativeQuery = true)
     void addEmployeeShfit(@Param("e") Long e, @Param("s") Long s);
 
+    /**
+     * @param valueOf
+     * @return
+     */
+    List<EmployeeShift> findByShift_StartDateTimeBetween(Timestamp start, Timestamp end);
+
 }

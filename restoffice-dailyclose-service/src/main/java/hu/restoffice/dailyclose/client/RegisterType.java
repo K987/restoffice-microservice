@@ -1,4 +1,4 @@
-package hu.restoffice.dailyclose.domain;
+package hu.restoffice.dailyclose.client;
 
 import java.io.IOException;
 import java.util.stream.Stream;

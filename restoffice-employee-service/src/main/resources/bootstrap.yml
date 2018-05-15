@@ -1,9 +1,12 @@
+info:
+  app:
+    message: Hello employee-service from bootstrap!
 spring:
   application:
     name: restoffice-employee-service
   profiles:
     active:
-    - development
+    - test
 aspect:
   logging:
     component:
@@ -32,6 +35,3 @@ spring:
         enabled: true
         service-id: restoffice-config-server
       fail-fast: true
-eureka:
-  client:
-    fetch-registry: true

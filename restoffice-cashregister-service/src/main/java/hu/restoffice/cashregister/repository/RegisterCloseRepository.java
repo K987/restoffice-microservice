@@ -18,7 +18,7 @@ public interface RegisterCloseRepository extends JpaRepository<RegisterClose, Lo
 
     List<RegisterClose> findByCloseDate(Date day);
 
-    @Query("select r from RegisterClose r where (r.id, r.closeNo) in (select r1.id, max(r1.closeNo) from RegisterClose r1 group by r1.id )")
+    @Query("select r from RegisterClose r where r.id in (select max(r1.id) from RegisterClose r1 group by r1.register.id)")
     List<RegisterClose> findLastCloses();
 
     Optional<RegisterClose> findByCloseNoAndRegister_RegistrationNo(Long closeNo, String registrationNo);

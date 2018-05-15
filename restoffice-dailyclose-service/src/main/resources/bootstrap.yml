@@ -1,4 +1,6 @@
-message: Hello from local bootsrap!
+info:
+  app:
+    message: Hello dailyclose-service from bootsrtap!
 spring:
   application:
     name: restoffice-dailyclose-service
@@ -37,7 +39,3 @@ spring:
         enabled: true
         service-id: restoffice-config-server
       fail-fast: true
-
-eureka:
-  client:
-    fetch-registry: true

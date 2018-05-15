@@ -5,7 +5,7 @@ spring:
     name: restoffice-config-server
   profiles:
     active:
-    - development
+    - test
   cloud:
     config:
       server:

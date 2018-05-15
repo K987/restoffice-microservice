@@ -7,7 +7,7 @@ import hu.restoffice.dailyclose.entity.ShiftDailyClose;
 /**
  *
  */
-public interface SifhtDailyCloseRepository extends JpaRepository<ShiftDailyClose, Long> {
+public interface ShiftDailyCloseRepository extends JpaRepository<ShiftDailyClose, Long> {
 
 
 }

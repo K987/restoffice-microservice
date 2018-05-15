@@ -1,16 +1,23 @@
 package hu.restoffice.employee.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.restoffice.commons.error.ServiceException;
@@ -24,8 +31,10 @@ import hu.restoffice.employee.service.EmployeeShiftService;
  *
  */
 @RestController
-@RequestMapping(path = "/employee/shift", produces = MediaType.APPLICATION_JSON)
+@RequestMapping(path = "/employee-shift", produces = MediaType.APPLICATION_JSON)
 public class EmployeeShiftControllerImpl implements EmployeeShiftController {
+
+    private static final Logger log = LogManager.getLogger();
 
     @Resource
     private DefaultController employeeShiftDefaultController;
@@ -101,5 +110,17 @@ public class EmployeeShiftControllerImpl implements EmployeeShiftController {
         return employeeShiftDefaultController.updateResource(arg0, arg1);
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see hu.restoffice.employee.controller.EmployeeShiftController#
+     * getEmployeeShiftsOfDay(java.time.LocalDate)
+     */
+    @Override
+    public ResponseEntity<?> getEmployeeShiftsOfDay(
+            @RequestParam("day") @NotNull @DateTimeFormat(iso = ISO.DATE) final LocalDate day) throws ServiceException {
+        log.info("getEmployeeShiftsOfDay invoked day: " + day);
+        return ResponseEntity.ok(converter().from(service().getScheduledShifts(day)));
+    }
 
 }

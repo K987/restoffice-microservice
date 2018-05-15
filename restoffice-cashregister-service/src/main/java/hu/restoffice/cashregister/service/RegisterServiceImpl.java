@@ -61,7 +61,7 @@ public class RegisterServiceImpl extends AbstractCRUDService<Register, RegisterR
 
     @Override
     protected boolean isDeletable(final Long id) throws ServiceException {
-        return (repo.hasCloses(id) == 0);
+        return (repo.hasCloses(id) == 1);
     }
 
 }

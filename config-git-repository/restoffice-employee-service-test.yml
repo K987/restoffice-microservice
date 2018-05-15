@@ -1,0 +1,3 @@
+info:
+  app:
+    message: Hello employee-service from config!

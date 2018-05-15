@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import hu.restoffice.dailyclose.domain.RegisterCloseStub;
-import hu.restoffice.dailyclose.domain.RegisterStub;
 
 /**
  *
